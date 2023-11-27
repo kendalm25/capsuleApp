@@ -1,55 +1,32 @@
-import { Tabs } from "expo-router";
+import React from "react";
+import { Stack } from "expo-router";
 
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-
-export default function AppLayout() {
+const StackLayout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Tabs.Screen
+    <Stack>
+      <Stack.Screen
         name="index"
         options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ size, color }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
-          ),
+          headerShown: false,
         }}
       />
 
-      <Tabs.Screen
-        name="map"
+      <Stack.Screen
+        name="basicInfo"
         options={{
-          tabBarLabel: "Map",
-          tabBarIcon: ({ size, color }) => (
-            <Feather name="map-pin" size={size} color={color} />
-          ),
+          headerTitle: " ",
+          headerBackTitle: "Back",
         }}
       />
 
-      <Tabs.Screen
-        name="saved"
+      <Stack.Screen
+        name="screens"
         options={{
-          tabBarLabel: "Saved",
-          tabBarIcon: ({ size, color }) => (
-            <Feather name="heart" size={size} color={color} />
-          ),
+          headerShown: false,
         }}
       />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          tabBarLabel: "Profile",
-          tabBarIcon: ({ size, color }) => (
-            <Ionicons name="person-circle-outline" size={size} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+    </Stack>
   );
-}
+};
+
+export default StackLayout;

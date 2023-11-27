@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { Tabs, Link } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
-export default function Saved() {
+export default function Profile() {
+  const params = useLocalSearchParams();
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
