@@ -1,28 +1,20 @@
-import React from "react";
 import { Stack } from "expo-router";
 
-export default function StackLayout() {
+export default function StackLayoutPrompt() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="viewprompt"
         options={{
           headerShown: false,
         }}
       />
 
       <Stack.Screen
-        name="basicInfo"
+        name="confirmation"
         options={{
           headerTitle: " ",
           headerBackTitle: "Back",
-        }}
-      />
-
-      <Stack.Screen
-        name="screens"
-        options={{
-          headerShown: false,
         }}
       />
     </Stack>

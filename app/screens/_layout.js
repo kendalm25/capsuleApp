@@ -52,7 +52,7 @@ export default function AppLayout() {
       />
 
       <Tabs.Screen
-        name="prompts/index"
+        name="prompt"
         options={{
           href: null,
         }}
