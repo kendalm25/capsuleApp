@@ -13,12 +13,14 @@ import { useState } from "react";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const confirmationPage = () => {
+const submittedPage = () => {
   return (
     <SafeAreaView>
-      <Text>Prompt will be shown here</Text>
+      <Text style={{ marginTop: 20 }}>
+        Your Capsule has been submitted. Animation goes here.
+      </Text>
     </SafeAreaView>
   );
 };
 
-export default confirmationPage;
+export default submittedPage;

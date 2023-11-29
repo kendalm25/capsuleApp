@@ -11,10 +11,9 @@ export default function StackLayoutPrompt() {
       />
 
       <Stack.Screen
-        name="confirmation"
+        name="submitted"
         options={{
-          headerTitle: " ",
-          headerBackTitle: "Back",
+          headerShown: false,
         }}
       />
     </Stack>
