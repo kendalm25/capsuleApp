@@ -7,7 +7,7 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import { useLocalSearchParams, Link, router } from "expo-router";
+import { useLocalSearchParams, Link } from "expo-router";
 import { useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -40,11 +40,12 @@ export default function App() {
           </View>
           <View style={styles.viewPrompt}>
             <Link
-              href="/screens/prompt/viewprompt"
-              style={styles.viewPromptBtn}
+              href={{
+                pathname: "/prompts/index",
+              }}
               asChild
             >
-              <Pressable>
+              <Pressable style={styles.viewPromptBtn}>
                 <Text style={styles.viewPromptText}>View Prompt</Text>
               </Pressable>
             </Link>
