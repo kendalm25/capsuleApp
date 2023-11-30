@@ -1,8 +1,8 @@
-import React from 'react';
-import { Text, ScrollView, View, StyleSheet } from 'react-native';
-import { Route, useNavigation, useRoute } from '@react-navigation/native';
-import { AboutCapsuleCard, Brand, Button } from '@/components';
-import { useCapsule, useTheme } from '../../hooks';
+import React from "react";
+import { Text, ScrollView, View, StyleSheet } from "react-native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { AboutCapsuleCard, Brand, Button } from "@/components";
+import { useCapsule, useTheme } from "../../hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 14,
     borderRadius: 10,
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
   },
 });
 
 const PreviewCapsule = () => {
-  const route = useRoute<Route<'PreviewCapsule', { id: string }>>();
+  const route = useRoute<Route<"PreviewCapsule", { id: string }>>();
 
   const { Layout, Fonts } = useTheme();
   const navigation = useNavigation<any>();
@@ -64,7 +64,7 @@ const PreviewCapsule = () => {
               width={222}
               title="Open Capsule"
               onPress={() => {
-                navigation.navigate('Capsule', { id: capsule.id });
+                navigation.navigate("Capsule", { id: capsule.id });
               }}
             />
           </View>

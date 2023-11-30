@@ -1,13 +1,43 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import { View, ScrollView, StyleSheet, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Brand, BrandText, Button } from "@/components";
 import { useAvailableCapsule, useTheme } from "@/hooks";
+import { Colors } from "@/theme/Variables";
+
+const windowWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   brandTextContainer: {
     paddingTop: 28,
     paddingBottom: 28,
+  },
+
+  capsuleContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  capsuleAvailable: {
+    width: windowWidth * 0.8,
+    backgroundColor: "#f2f2f2",
+    height: 150,
+    marginBottom: 10,
+    justifyContent: "center",
+    borderRadius: 50,
+    shadowRadius: 4,
+    shadowOpacity: 0.25,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowColor: Colors.black,
+  },
+
+  capsuleAvailableText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "700",
   },
 });
 
@@ -54,8 +84,14 @@ const Home = () => {
           <Brand height={160} />
         </View>
         {capsule ? (
-          <View>
-            <Text>Task.7</Text>
+          <View style={[styles.capsuleContainer]}>
+            <View style={[styles.capsuleAvailable]}>
+              <Text style={[styles.capsuleAvailableText]}>
+                New Capsule Available To View!
+              </Text>
+            </View>
+
+            {/* <Text>Task.7</Text> */}
             <Button
               width={222}
               title="View Capsule"

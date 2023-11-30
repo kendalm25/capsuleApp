@@ -6,6 +6,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
 import FlairTag from "../FlairTag/FlairTag";
+import { Colors } from "@/theme/Variables";
 
 const windowHieght = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -20,6 +21,13 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.75,
     height: 185,
     borderRadius: 25,
+    shadowRadius: 4,
+    shadowOpacity: 0.25,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowColor: Colors.black,
   },
 
   capsuleContent: {
@@ -51,12 +59,12 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
 
-  happyFlair: {
+  funFlair: {
     backgroundColor: "orange",
     marginHorizontal: 5,
   },
 
-  hungryFlair: {
+  learningFlair: {
     backgroundColor: "green",
     marginHorizontal: 5,
   },
@@ -88,8 +96,8 @@ const AboutCapsuleCard = ({}: Props) => {
         </View>
         <View style={[styles.capsuleInfo]}>
           <View style={[styles.flairs]}>
-            <FlairTag style={[styles.happyFlair]} type={"Happy"} />
-            <FlairTag style={[styles.hungryFlair]} type={"Hungry"} />
+            <FlairTag style={[styles.funFlair]} type={"Fun"} />
+            <FlairTag style={[styles.learningFlair]} type={"Learning"} />
           </View>
         </View>
       </View>

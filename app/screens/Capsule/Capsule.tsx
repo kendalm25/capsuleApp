@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Route, useNavigation, useRoute } from '@react-navigation/native';
-import { Brand, Button } from '@/components';
-import { useCapsule, useTheme } from '../../hooks';
-import { useDispatch } from 'react-redux';
-import { viewCapsule } from '@/store/capsule';
+import React, { useState } from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { Brand, Button } from "@/components";
+import { useCapsule, useTheme } from "../../hooks";
+import { useDispatch } from "react-redux";
+import { viewCapsule } from "@/store/capsule";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 14,
     borderRadius: 10,
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
   },
 });
 
 const Capsule = () => {
-  const route = useRoute<Route<'Capsule', { id: string }>>();
+  const route = useRoute<Route<"Capsule", { id: string }>>();
   const [loaded, setLoaded] = useState(false);
 
   const { Layout, Fonts } = useTheme();
@@ -42,9 +42,17 @@ const Capsule = () => {
       ]}
     >
       <View style={[Layout.fullWidth]}>
-        <Text style={[Fonts.textLarge]}>{capsule.title}</Text>
+        <Text style={[Fonts.textLarge]}>
+          What is a fun fact you know?
+          {/* {capsule.title} */}
+        </Text>
         <View style={[styles.content, Layout.fullWidth]}>
-          <Text style={[Fonts.textRegular]}>{capsule.content}</Text>
+          <Text style={[Fonts.textRegular]}>
+            Carrots were originally purple and were later selectively bred to be
+            orange by the Dutch in the 17th century to honor the royal House of
+            Orange.
+            {/* {capsule.content} */}
+          </Text>
         </View>
       </View>
       <View>
@@ -53,7 +61,7 @@ const Capsule = () => {
           title="Done Viewing"
           onPress={() => {
             dispatch(viewCapsule(capsule.id));
-            navigation.navigate('_Home');
+            navigation.navigate("_Home");
           }}
         />
       </View>
