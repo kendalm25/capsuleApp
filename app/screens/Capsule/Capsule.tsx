@@ -58,7 +58,7 @@ const Capsule = () => {
       <View>
         <Button
           width={222}
-          title="Done Viewing"
+          title="Save Capsule"
           onPress={() => {
             dispatch(viewCapsule(capsule.id));
             navigation.navigate("_Home");
