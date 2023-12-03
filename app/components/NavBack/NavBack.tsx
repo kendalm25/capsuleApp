@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// https://github.com/react-navigation/react-navigation/issues/11564
 const NavBack = ({ icon: Icon = IconBack }: Props) => {
   const { goBack } = useNavigation();
 

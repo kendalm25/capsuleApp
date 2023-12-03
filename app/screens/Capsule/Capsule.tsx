@@ -42,17 +42,9 @@ const Capsule = () => {
       ]}
     >
       <View style={[Layout.fullWidth]}>
-        <Text style={[Fonts.textLarge]}>
-          What is a fun fact you know?
-          {/* {capsule.title} */}
-        </Text>
+        <Text style={[Fonts.textLarge]}>{capsule.title}</Text>
         <View style={[styles.content, Layout.fullWidth]}>
-          <Text style={[Fonts.textRegular]}>
-            Carrots were originally purple and were later selectively bred to be
-            orange by the Dutch in the 17th century to honor the royal House of
-            Orange.
-            {/* {capsule.content} */}
-          </Text>
+          <Text style={[Fonts.textRegular]}>{capsule.content}</Text>
         </View>
       </View>
       <View>

@@ -1,97 +1,91 @@
-import React from 'react';
-import { Text, ScrollView, Alert } from 'react-native';
-// import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import { useAvailableCapsule, useTheme } from '../../hooks';
-import { Button } from '@/components';
-import { useDispatch } from 'react-redux';
-import {
-  createUnSavedMockCapsule,
-  makeRandomAvailable,
-  resetCapsuleStore,
-} from '@/store/capsule';
-import { useNavigation } from '@react-navigation/native';
+import React, { Fragment, useMemo, useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { useCapsules } from "../../hooks";
+
+import MapView, { Marker } from "react-native-maps";
+import { IconLogo } from "@/icons";
+import { Colors } from "@/theme/Variables";
+import { CapsuleList } from "@/components";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  list: {
+    position: "absolute",
+    top: 12,
+    minHeight: 120,
+    left: "10%",
+    width: "80%",
+    backgroundColor: Colors.white,
+    borderRadius: 8,
+    padding: 12,
+    shadowRadius: 4,
+    shadowOpacity: 0.25,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowColor: Colors.black,
+  },
+});
 
 const Map = () => {
-  const navigation = useNavigation<any>();
-  const { Layout } = useTheme();
-  const dispatch = useDispatch();
+  const [mapRegion] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+  });
 
-  const { capsule } = useAvailableCapsule();
+  const [target, setTarget] = useState<number>();
+
+  const capsules = useCapsules();
+
+  const selectedCapsules = useMemo(() => {
+    const targetRegion =
+      typeof target === "number" ? capsules.capsules[target] : undefined;
+    return capsules.capsules.filter(
+      (item) =>
+        item.region?.latitude === targetRegion?.region?.latitude &&
+        item.region?.longitude === targetRegion?.region?.longitude
+    );
+  }, [capsules.capsules, target]);
 
   return (
-    <ScrollView
-      style={Layout.fill}
-      contentContainerStyle={[
-        Layout.fullSize,
-        Layout.fill,
-        Layout.colCenter,
-        Layout.scrollSpaceAround,
-      ]}
-    >
-      <Text>Map</Text>
-      <Button
-        title="WriteCapsule"
+    <View style={styles.container}>
+      <MapView
+        style={{ alignSelf: "stretch", height: "100%" }}
+        region={mapRegion}
         onPress={() => {
-          navigation.navigate('WriteCapsule');
+          setTarget(undefined);
         }}
-      />
-      <Button
-        title="CreateUnSavedMockCapsule"
-        onPress={() => {
-          dispatch(createUnSavedMockCapsule());
-        }}
-      />
-      <Button
-        title="MakeRandomAvailable"
-        onPress={() => {
-          dispatch(makeRandomAvailable());
-        }}
-      />
+      >
+        {capsules.capsules.map((item, index) => {
+          if (!item.region) {
+            return <Fragment key={index} />;
+          }
 
-      <Button
-        title="MakeRandomAvailableAndPushNotification"
-        onPress={() => {
-          dispatch(makeRandomAvailable());
-
-          setTimeout(() => {
-            const id = capsule?.id;
-
-            if (!id) {
-              return;
-            }
-
-            Alert.alert('Not ready in expo')
-
-            // PushNotificationIOS.requestPermissions().then(() => {
-            //   PushNotificationIOS.addNotificationRequest({
-            //     id: 'capsule',
-            //     title: 'Capsule',
-            //     subtitle: 'A new prompt is available.',
-            //     fireDate: new Date(Date.now() + 10 * 1000),
-            //     userInfo: {
-            //       id,
-            //     },
-            //   });
-
-            //   Alert.alert(
-            //     'You need to shut down the process within ten seconds because the app cannot receive push notifications when it is in the foreground.',
-            //   );
-            // });
-          });
-        }}
-      />
-
-      <Button
-        title="ResetAll"
-        onPress={() => {
-          Alert.prompt('reset', 'type "ok" to conform', text => {
-            if (text === 'ok') {
-              dispatch(resetCapsuleStore());
-            }
-          });
-        }}
-      />
-    </ScrollView>
+          return (
+            <Marker
+              key={index}
+              coordinate={item.region}
+              onPress={(e) => {
+                e.stopPropagation();
+                setTarget(index);
+              }}
+            >
+              <IconLogo />
+            </Marker>
+          );
+        })}
+      </MapView>
+      {typeof target === "number" && (
+        <View style={styles.list}>
+          <CapsuleList title="" capsules={selectedCapsules} />
+        </View>
+      )}
+    </View>
   );
 };
 

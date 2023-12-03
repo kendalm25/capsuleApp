@@ -9,8 +9,7 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-// TODO
-// import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import FlairTag from '../FlairTag/FlairTag';
 import { IconCheckBox, IconCheckBoxFill, IconPlus, IconTimes } from '@/icons';
 import { useFlairs, useTheme } from '@/hooks';
@@ -87,9 +86,7 @@ const FlairSelect = ({ value, onChange }: Props) => {
   const { Fonts } = useTheme();
   const { flairs } = useFlairs();
 
-  // TODO
-  // const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const bottomSheetModalRef = useRef<any>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const snapPoints = useMemo(() => ['50%', '80%', '100%'], []);
 
@@ -135,7 +132,7 @@ const FlairSelect = ({ value, onChange }: Props) => {
           </View>
         </View>
       </Pressable>
-      {/* <BottomSheetModal
+      <BottomSheetModal
         ref={bottomSheetModalRef}
         backdropComponent={renderBackground}
         index={0}
@@ -173,7 +170,7 @@ const FlairSelect = ({ value, onChange }: Props) => {
             })}
           </View>
         </View>
-      </BottomSheetModal> */}
+      </BottomSheetModal>
     </View>
   );
 };

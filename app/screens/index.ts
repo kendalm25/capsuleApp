@@ -8,3 +8,4 @@ export { default as WriteCapsule } from './WriteCapsule/WriteCapsule';
 export { default as SelectCabinet } from './SelectCabinet/SelectCabinet';
 export { default as PreviewCapsule } from './PreviewCapsule/PreviewCapsule';
 export { default as Capsule } from './Capsule/Capsule';
+export { default as User } from './User/User';

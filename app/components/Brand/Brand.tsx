@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
-import { View, DimensionValue, Animated, StyleSheet } from 'react-native';
-import { useTheme } from '@/hooks';
+import React, { useEffect, useState } from "react";
+import { View, DimensionValue, Animated, StyleSheet } from "react-native";
+import { useTheme } from "@/hooks";
 
 type Props = {
   height?: DimensionValue;
   width?: DimensionValue;
   animation?: boolean;
+  revert?: boolean;
   onAnimationEnd?: () => void;
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
   },
   edge: {
     width: 69,
@@ -26,11 +27,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const Brand = ({ height, width, animation, onAnimationEnd }: Props) => {
+const Brand = ({ height, width, animation, revert, onAnimationEnd }: Props) => {
   const { Images } = useTheme();
 
-  const topTranslateY = new Animated.Value(36);
-  const bottomTranslateY = new Animated.Value(-36);
+  const [from, to] = revert ? [-14, -36] : [36, 14];
+
+  const [end, setEnd] = useState(false);
+  const topTranslateY = new Animated.Value(from);
+  const bottomTranslateY = new Animated.Value(-from);
 
   useEffect(() => {
     if (!animation) {
@@ -38,12 +42,15 @@ const Brand = ({ height, width, animation, onAnimationEnd }: Props) => {
     }
 
     Animated.timing(topTranslateY, {
-      toValue: -14,
+      toValue: -to,
       duration: 1200,
       useNativeDriver: true,
-    }).start(onAnimationEnd);
+    }).start(() => {
+      onAnimationEnd?.();
+      setEnd(true);
+    });
     Animated.timing(bottomTranslateY, {
-      toValue: 14,
+      toValue: to,
       duration: 1200,
       useNativeDriver: true,
     }).start();
@@ -57,7 +64,7 @@ const Brand = ({ height, width, animation, onAnimationEnd }: Props) => {
           {
             transform: [
               {
-                translateY: topTranslateY,
+                translateY: end ? -to : topTranslateY,
               },
             ],
           },
@@ -71,7 +78,7 @@ const Brand = ({ height, width, animation, onAnimationEnd }: Props) => {
           {
             transform: [
               {
-                translateY: bottomTranslateY,
+                translateY: end ? to : bottomTranslateY,
               },
             ],
           },
@@ -86,6 +93,7 @@ Brand.defaultProps = {
   width: 71,
   height: 360,
   animation: false,
+  revert: false,
   onAnimationEnd: undefined,
 };
 

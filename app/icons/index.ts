@@ -10,3 +10,6 @@ export { default as IconCheckBox } from './CheckBox';
 export { default as IconCheckBoxFill } from './CheckBoxFill';
 export { default as IconTimes } from './Times';
 export { default as IconPlus } from './Plus';
+export { default as IconLogo } from './Logo';
+export { default as IconLight } from './Light';
+export { default as IconCapsule } from './Capsule';

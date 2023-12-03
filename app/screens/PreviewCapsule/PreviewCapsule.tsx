@@ -50,7 +50,7 @@ const PreviewCapsule = () => {
             styles.container,
           ]}
         >
-          <View>
+          <View style={[Layout.alignItemsCenter]}>
             <Text style={[Fonts.textRegular, Fonts.textBold, styles.about]}>
               About This Capsule:
             </Text>

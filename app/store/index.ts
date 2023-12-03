@@ -11,7 +11,7 @@ import {
   REGISTER,
   Storage,
 } from "redux-persist";
-// TODO
+// TODO not need
 // import { MMKV } from "react-native-mmkv";
 
 import theme from "./theme";

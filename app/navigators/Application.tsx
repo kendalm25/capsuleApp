@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from "react";
 import {
   AppState,
   AppStateStatus,
   SafeAreaView,
   StatusBar,
-} from 'react-native';
+} from "react-native";
 import {
   NavigationContainer,
   useNavigation,
   useNavigationContainerRef,
-} from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+} from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 // import { useFlipper } from '@react-navigation/devtools';
-import { Colors } from '@/theme/Variables';
+import { Colors } from "@/theme/Variables";
 import {
   Cabinet,
   CreateCabinet,
@@ -25,12 +25,13 @@ import {
   PreviewCapsule,
   Capsule,
   WriteCapsule,
-} from '@/screens';
-import { NavBack } from '@/components';
-import { useTheme } from '@/hooks';
-import { IconCabinet, IconHome, IconMap, IconUser } from '@/icons';
+  User,
+} from "@/screens";
+import { NavBack } from "@/components";
+import { useTheme } from "@/hooks";
+import { IconCabinet, IconHome, IconMap, IconUser } from "@/icons";
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
-// import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -52,18 +53,26 @@ const Home = () => {
         component={_Home}
       />
       <HomeStack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: NavBack.normal,
+        }}
         name="PreviewCapsule"
         component={PreviewCapsule}
       />
       <HomeStack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: NavBack.normal,
+        }}
         name="Capsule"
         component={Capsule}
       />
       <HomeStack.Screen
         options={{
-          headerTitle: '',
+          headerTitle: "",
           headerTransparent: true,
           headerLeft: NavBack.times,
         }}
@@ -76,7 +85,7 @@ const Home = () => {
 
 const Main = () => {
   return (
-    // <BottomSheetModalProvider>
+    <BottomSheetModalProvider>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -89,17 +98,16 @@ const Main = () => {
           tabBarInactiveBackgroundColor: Colors.tabBackground,
           tabBarActiveBackgroundColor: Colors.tabActiveBackground,
           tabBarLabelStyle: {
-            display: 'none',
+            display: "none",
           },
         })}
       >
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Cabinet" component={Cabinet} />
         <Tab.Screen name="Map" component={Map} />
-        {/* Task.9 */}
-        <Tab.Screen name="User" component={Map} />
+        <Tab.Screen name="User" component={User} />
       </Tab.Navigator>
-    // </BottomSheetModalProvider>
+    </BottomSheetModalProvider>
   );
 };
 
@@ -109,13 +117,15 @@ const ApplicationNavigator = () => {
 
   const navigationRef = useNavigationContainerRef();
 
-  // useFlipper(navigationRef);
-
   return (
     <SafeAreaView style={[Layout.fill]}>
-      <NavigationContainer theme={NavigationTheme} ref={navigationRef} independent={true}>
+      <NavigationContainer
+        theme={NavigationTheme}
+        ref={navigationRef}
+        independent={true}
+      >
         <InitNotification />
-        <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
+        <StatusBar barStyle={darkMode ? "light-content" : "dark-content"} />
         <Stack.Navigator>
           <Stack.Screen
             options={{
@@ -126,7 +136,7 @@ const ApplicationNavigator = () => {
           />
           <Stack.Screen
             options={{
-              headerTitle: '',
+              headerTitle: "",
               headerTransparent: true,
               headerLeft: NavBack.normal,
             }}
@@ -135,26 +145,25 @@ const ApplicationNavigator = () => {
           />
           <Stack.Screen
             options={{
-              headerTitle: '',
+              headerTitle: "",
               headerTransparent: true,
               headerLeft: NavBack.normal,
             }}
             name="StoreCapsule"
             component={StoreCapsule}
           />
-          {/* Task.6 */}
           <Stack.Screen
             options={{
-              headerTitle: '',
+              headerTitle: "",
               headerTransparent: true,
-              headerLeft: NavBack.normal,
+              headerLeft: () => null,
             }}
             name="DeleteCapsule"
             component={DeleteCapsule}
           />
           <Stack.Screen
             options={{
-              headerTitle: '',
+              headerTitle: "",
               headerTransparent: true,
               headerLeft: NavBack.normal,
             }}
@@ -194,7 +203,7 @@ function InitNotification() {
       // });
     };
 
-    const sub = AppState.addEventListener('change', initFn);
+    const sub = AppState.addEventListener("change", initFn);
 
     return () => {
       sub.remove();

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f2f2f2",
     width: windowWidth * 0.75,
-    height: 185,
+    height: 131,
     borderRadius: 25,
     shadowRadius: 4,
     shadowOpacity: 0.25,
@@ -32,19 +32,19 @@ const styles = StyleSheet.create({
 
   capsuleContent: {
     flexDirection: "column",
-    paddingTop: 15,
+    paddingTop: 10,
     paddingRight: 10,
   },
 
   capsuleInfo: {
     flexDirection: "row",
     marginHorizontal: 10,
-    marginVertical: 7,
+    marginVertical: 2,
     alignItems: "center",
   },
 
   informationText: {
-    fontSize: 17,
+    fontSize: 16,
     marginLeft: 10,
     flex: 6,
   },
@@ -56,9 +56,11 @@ const styles = StyleSheet.create({
 
   flairs: {
     flexDirection: "row",
-    marginLeft: 20,
+    marginLeft: 12,
   },
-
+  flair: {
+    margin: 2,
+  },
   funFlair: {
     backgroundColor: "orange",
     marginHorizontal: 5,
@@ -70,25 +72,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const AboutCapsuleCard = ({}: Props) => {
+const AboutCapsuleCard = ({ capsule }: Props) => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.capsuleContent]}>
         <View style={[styles.capsuleInfo]}>
           <View style={[styles.icon]}>
-            <Fontisto name="person" size={24} color="pink" />
+            <Fontisto name="person" size={18} color="pink" />
           </View>
           <Text style={[styles.informationText]}>Pronouns: she/her</Text>
         </View>
         <View style={[styles.capsuleInfo]}>
           <View style={[styles.icon]}>
-            <Fontisto name="persons" size={24} color="gray" />
+            <Fontisto name="persons" size={18} color="gray" />
           </View>
           <Text style={[styles.informationText]}>Age: 20-25</Text>
         </View>
         <View style={[styles.capsuleInfo]}>
           <View style={[styles.icon]}>
-            <FontAwesome name="map-pin" size={24} color="red" />
+            <FontAwesome name="map-pin" size={18} color="red" />
           </View>
           <Text style={[styles.informationText]}>
             Caspule Sent From: 2 miles away
@@ -96,8 +98,9 @@ const AboutCapsuleCard = ({}: Props) => {
         </View>
         <View style={[styles.capsuleInfo]}>
           <View style={[styles.flairs]}>
-            <FlairTag style={[styles.funFlair]} type={"Fun"} />
-            <FlairTag style={[styles.learningFlair]} type={"Learning"} />
+            {capsule.flairs?.map((flair) => (
+              <FlairTag key={flair} style={[styles.flair]} type={flair} />
+            ))}
           </View>
         </View>
       </View>

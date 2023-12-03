@@ -1,48 +1,68 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+function getRandomRegion() {
+  return {
+    latitude: Number((37.78825 + (Math.random() - 0.5) / 20).toFixed(4)),
+    longitude: Number((-122.4324 + (Math.random() - 0.5) / 20).toFixed(4)),
+  };
+}
+
+// In order to demonstrate that the randomly generated capsules can be together,
+// a fixed random area coordinate is created in advance
+const randomRegions = [...Array(4)].map(() => getRandomRegion());
 
 const slice = createSlice({
-  name: 'capsule',
+  name: "capsule",
   initialState: {
     capsules: [],
     flair: [
-      'Happy',
-      'Appreciation',
-      'Passionate',
-      'Fear',
-      'Sincere',
-      'Fun',
-      'Calm',
+      "Happy",
+      "Appreciation",
+      "Passionate",
+      "Fear",
+      "Sincere",
+      "Fun",
+      "Calm",
     ],
     cabinets: [],
   } as CapsuleState,
   reducers: {
-    resetCapsuleStore: state => {
+    resetCapsuleStore: (state) => {
       Object.assign(state, {
         capsules: [],
         flair: [
-          'Happy',
-          'Appreciation',
-          'Passionate',
-          'Fear',
-          'Sincere',
-          'Fun',
-          'Calm',
+          "Happy",
+          "Appreciation",
+          "Passionate",
+          "Fear",
+          "Sincere",
+          "Fun",
+          "Calm",
         ],
         cabinets: [],
       });
     },
-    createUnSavedMockCapsule: (state: CapsuleState) => {
+    createCapsule: (
+      state: CapsuleState,
+      {
+        payload,
+      }: {
+        payload: { capsule: Partial<Capsule> };
+      }
+    ) => {
       state.capsules = [
         ...(state.capsules || []),
         {
           id: String(Date.now()),
           title: new Date().toLocaleString(),
-          content: 'mock content',
+          content: "mock content",
           flairs: [state.flair[Math.floor(Math.random() * state.flair.length)]],
           cabinet: undefined,
           date: Date.now(),
-          distance: undefined,
+          region:
+            randomRegions[Math.floor(Math.random() * randomRegions.length)],
           available: false,
+          ...payload.capsule,
         },
       ];
     },
@@ -61,9 +81,9 @@ const slice = createSlice({
         payload,
       }: {
         payload: string;
-      },
+      }
     ) => {
-      const index = state.capsules.findIndex(item => item.id === payload);
+      const index = state.capsules.findIndex((item) => item.id === payload);
 
       const capsules = [...state.capsules];
 
@@ -77,9 +97,9 @@ const slice = createSlice({
         payload,
       }: {
         payload: string;
-      },
+      }
     ) => {
-      state.capsules = state.capsules.filter(item => item.id !== payload);
+      state.capsules = state.capsules.filter((item) => item.id !== payload);
     },
     createCabinet: (
       state: CapsuleState,
@@ -87,7 +107,7 @@ const slice = createSlice({
         payload,
       }: {
         payload: string;
-      },
+      }
     ) => {
       state.cabinets = [...(state.cabinets || []), payload];
     },
@@ -100,10 +120,10 @@ const slice = createSlice({
           capsule: string;
           cabinet: string;
         };
-      },
+      }
     ) => {
-      state.capsules = state.capsules.map(item =>
-        item.id === capsule ? { ...item, cabinet } : item,
+      state.capsules = state.capsules.map((item) =>
+        item.id === capsule ? { ...item, cabinet } : item
       );
     },
   },
@@ -111,7 +131,7 @@ const slice = createSlice({
 
 export const {
   storeToCabinet,
-  createUnSavedMockCapsule,
+  createCapsule,
   makeRandomAvailable,
   createCabinet,
   viewCapsule,
@@ -128,7 +148,12 @@ export interface Capsule {
   flairs: string[] | undefined;
   cabinet: string | undefined;
   date: number;
-  distance: string | undefined;
+  region:
+    | {
+        latitude: number;
+        longitude: number;
+      }
+    | undefined;
   available: boolean;
 }
 
