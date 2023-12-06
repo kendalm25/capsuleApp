@@ -37,6 +37,48 @@ export const CapsuleCard = ({ capsule }) => {
   );
 };
 
+export const CapsuleCardHorizontalList = ({ cabinet }) => {
+  const { capsules, id } = cabinet;
+  // const numOfCapsules = cabinet.capsules.length;
+
+  // React.useEffect(() => {
+  //   updateCapsuleCount(numOfCapsules);
+  // }, [numOfCapsules, updateCapsuleCount]);
+
+  return (
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingHorizontal: 16,
+        paddingBottom: 16,
+      }}
+    >
+      {capsules.map((capsule, index) => (
+        <CapsuleCard capsule={capsule} key={index} />
+      ))}
+
+      {id !== "all" && (
+        <Link
+          href={{
+            pathname: "/CreateCabinet",
+            params: { cabinet_id: cabinet.id },
+          }}
+          asChild
+        >
+          <TouchableOpacity>
+            <View style={cardStyle.addCapsule}>
+              <Ionicons name="add-circle-outline" size={50} />
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Add Capsule
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </Link>
+      )}
+    </ScrollView>
+  );
+};
 
 const cardStyle = StyleSheet.create({
   root: {

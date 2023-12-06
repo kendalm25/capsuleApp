@@ -71,4 +71,7 @@ const tagColors = {
   sincere: "#BDB76B", // Dark Khaki for trustworthiness and earnestness
   fun: "#FF69B4", // Hot Pink for playful and spirited
   calm: "#ADD8E6", // Light Blue for tranquility and peace
+  local: "#32CD32", // (Lime Green) to represent growth and collaboration within the community.
+  shopping: "#DB7093", //(Pale Violet Red) symbolizing the fun and energy associated with discovering and acquiring new items
+  random: "#778899", //(Light Slate Gray) to signify the unknown and a sense of mystery that comes with randomness
 };

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import { YourCapsules } from "@/components/YourCapsules";
-// import { CapsuleCardHorizontalList } from "@/components/CapsuleCard";
+import { CapsuleCardHorizontalList } from "@/components/CapsuleCard";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useCapsuleStore } from "@/store/capsuleStore";
@@ -57,8 +57,7 @@ const Home = () => {
               size={20}
             />
           </View>
-          {/* KENDALL TODO: Implement CapsuleCardHorizontalList */}
-          {/* <CapsuleCardHorizontalList cabinet={cabinet} /> */}
+          <CapsuleCardHorizontalList cabinet={cabinet} />
         </View>
       ))}
 
@@ -68,8 +67,7 @@ const Home = () => {
           <Text style={styles.header}>All Capsules</Text>
           <Ionicons style={styles.icon} name="ios-chevron-forward" size={20} />
         </View>
-        {/* KENDALL TODO: Implement CapsuleCardHorizontalList */}
-        {/* <CapsuleCardHorizontalList cabinet={allCapsulesCabinet} /> */}
+        <CapsuleCardHorizontalList cabinet={allCapsulesCabinet} />
       </View>
 
       {/* Create new cabinets */}
