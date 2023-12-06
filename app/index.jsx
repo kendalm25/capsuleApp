@@ -30,7 +30,7 @@ const index = () => {
         <Stack.Screen
           name="Profile"
           options={{
-            headerTitle: "Profile",
+            headerShown: false,
           }}
           component={Profile}
         />

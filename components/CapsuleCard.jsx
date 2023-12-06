@@ -39,6 +39,12 @@ export const CapsuleCard = ({ capsule }) => {
 
 export const CapsuleCardHorizontalList = ({ cabinet }) => {
   const { capsules, id } = cabinet;
+  // const numOfCapsules = cabinet.capsules.length;
+
+  // React.useEffect(() => {
+  //   updateCapsuleCount(numOfCapsules);
+  // }, [numOfCapsules, updateCapsuleCount]);
+
   return (
     <ScrollView
       horizontal={true}
