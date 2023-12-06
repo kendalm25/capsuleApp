@@ -133,11 +133,43 @@ const fakeCabinets = [
   },
 ];
 
+const sentCapsules = [
+  {
+    id: "1",
+    question: "What's a local business you'd recommend?",
+    category: "shopping",
+    answer:
+      "There is a really cute boutique in Downtown Palo Alto that is really affordable and chic! It's called Leaf & Petal",
+    dateTime: "2023-11-28T12:00",
+    location: {
+      name: "Stanford Campus",
+      lat: 37.43358803600001,
+      long: -122.18041604630488,
+    },
+    tags: ["shopping", "off-campus", "local"],
+  },
+  {
+    id: "2",
+    question: "What's your favorite movie quote and why?",
+    category: "random",
+    answer:
+      "I love the godfather, so 'I'm gonna make him an offer he can't refuse.' is a classic.",
+    dateTime: "2023-11-29T12:00",
+    location: {
+      name: "Stanford Campus",
+      lat: 37.41980917493959,
+      long: -122.15115173659909,
+    },
+    tags: ["random", "fun"],
+  },
+];
+
 export const useCapsuleStore = create((set, get) => ({
   // State
   capsulePrompts: [...fakeCapsulePrompts],
   capsules: [...fakeCapsules],
   cabinets: [...fakeCabinets],
+  sentCapsules: [...sentCapsules],
 
   // Actions
   addCapsuleToCabinet: (cabinetId, capsule) =>
