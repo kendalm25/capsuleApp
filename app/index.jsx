@@ -9,7 +9,8 @@ import Home from "@/app/home";
 import Profile from "@/app/profile";
 import Capsules from "@/app/capsules";
 import CreateCabinet from "@/app/(modal)/CreateCabinet";
-import Cabinet from "@/app/cabinet";
+// import Cabinet from "@/app/cabinet";
+import Capsule from "@/app/(modal)/Capsule";
 
 const Stack = createNativeStackNavigator(); // Stack contains Screen & Navigator properties
 
@@ -96,7 +97,7 @@ const index = () => {
               </TouchableOpacity>
             ),
           }}
-          component={Cabinet}
+          component={Capsule}
         />
       </Stack.Navigator>
 

@@ -16,6 +16,8 @@ import { Link } from "expo-router";
 const Home = () => {
   const { cabinets, capsules } = useCapsuleStore();
 
+  console.log(capsules);
+
   //  join all the cabinets and capsules
   const cabinetsWithCapsules = cabinets.map((cabinet) => {
     const cabinetCapsules = cabinet.capsule_ids.map((capsuleId) => {

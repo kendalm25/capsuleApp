@@ -7,9 +7,12 @@ import Colors from "@/constants/Colors";
 import { TagsBadges } from "@/components/Badge";
 
 const Capsule = () => {
+  console.log("here");
   const { id } = useLocalSearchParams();
   const { capsules } = useCapsuleStore();
   const capsule = capsules.find((capsule) => capsule.id === id);
+
+  console.log("id", id, "capsule", capsule);
 
   return (
     <View style={styles.container}>

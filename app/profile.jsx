@@ -5,47 +5,33 @@ import { YourCapsules } from "@/components/YourCapsules";
 import { CapsuleCardHorizontalList } from "@/components/CapsuleCard";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { useCapsuleStore } from "@/store/sentCapsuleStore";
+import { FontAwesome } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useCapsuleStore } from "@/store/capsuleStore";
 import { Link } from "expo-router";
 import profilePic from "../assets/Images/profile-pic-1.jpeg";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
+const windowWidth = Dimensions.get("window").width;
+
 /**
  * Profile
  *
- * screen used for displaying user profile
+ * screen used for displayisng user profile
  * KENDAL TODO: implement this screen
  */
 const Profile = () => {
-  const { capsules } = useCapsuleStore();
-  // const [capsuleCount, setCapsuleCount] = useState(0);
-
-  // const updateCapsuleCount = (count) => {
-  //   setCapsuleCount(count);
-  // };
+  const { sentCapsules } = useCapsuleStore();
 
   const allCapsulesCabinet = {
     id: "all",
     name: "sent-capsules",
-    capsules: capsules,
+    capsules: sentCapsules,
   };
 
   return (
     <View style={styles.container}>
-      {/* header */}
-      <View style={styles.header}>
-        <View style={styles.title}>
-          {/* empty space */}
-          <Text style={styles.titleText}>{""}</Text>
-        </View>
-        <View style={styles.title}>
-          <Text style={styles.titleText}>PROFILE</Text>
-        </View>
-        <View style={styles.setting}>
-          <Ionicons name="ios-settings-sharp" size={24} color="black" />
-        </View>
-      </View>
-
       {/* profile pic + information */}
       <View style={styles.profileContainer}>
         <View style={styles.profileHeader}>
@@ -54,17 +40,37 @@ const Profile = () => {
           </View>
           <View style={styles.information}>
             <Text style={styles.name}> Jane Smith </Text>
-            <Text style={styles.info}> she/her </Text>
-            <Text style={styles.info}> 27 years old </Text>
-            <Text style={styles.info}> Bay Area </Text>
-          </View>
-        </View>
 
-        <View style={styles.viewContainer}>
-          <View style={styles.viewCount}>
-            <Text style={styles.viewText}>You Have Responded To:</Text>
-            <Text style={styles.viewText}>10</Text>
-            <Text style={styles.viewText}>Prompts</Text>
+            <Text style={styles.info}> (she/her) </Text>
+
+            <View style={styles.infoWithIcon}>
+              <MaterialCommunityIcons
+                style={styles.infoIcon}
+                name="lightbulb-outline"
+                size={24}
+                color="black"
+              />
+              <Text style={styles.info}> 27 years old </Text>
+            </View>
+
+            <View style={styles.infoWithIcon}>
+              <FontAwesome
+                style={styles.infoIcon}
+                name="location-arrow"
+                size={24}
+              />
+              <Text style={styles.info}> Bay Area </Text>
+            </View>
+
+            <View style={styles.infoWithIcon}>
+              <Ionicons
+                style={styles.icon}
+                name="ios-calendar-sharp"
+                size={24}
+                color="black"
+              />
+              <Text style={styles.info}> Joined December 2023 </Text>
+            </View>
           </View>
         </View>
 
@@ -79,10 +85,7 @@ const Profile = () => {
             />
           </View>
 
-          <CapsuleCardHorizontalList
-            cabinet={allCapsulesCabinet}
-            // updateCapsuleCount={updateCapsuleCount}
-          />
+          <CapsuleCardHorizontalList cabinet={allCapsulesCabinet} />
         </View>
       </View>
     </View>
@@ -92,13 +95,16 @@ const Profile = () => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+
   header: {
     flexDirection: "row",
     paddingRight: 20,
     paddingTop: 15,
     paddingBottom: 15,
-    // borderBottomWidth: 1,
-    // borderBottomColor: Colors.base300,
   },
 
   titleText: {
@@ -119,19 +125,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  container: {
-    flex: 1,
-  },
-
   profileContainer: {
-    flex: 1,
+    backgroundColor: "white",
   },
 
   profileHeader: {
-    marginTop: 30,
+    margin: 30,
     paddingHorizontal: 20,
     alignItems: "center",
-    flexDirection: "row",
   },
 
   picture: {
@@ -142,8 +143,24 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
+    borderWidth: 4,
+    borderColor: "black",
+    backgroundColor: "black",
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+  },
+
+  information: {
+    width: windowWidth * 0.9,
+    marginTop: 20,
+    padding: 20,
+    borderRadius: 10,
     borderWidth: 1,
-    borderStyle: "solid",
     borderColor: Colors.base300,
     shadowColor: Colors.base950,
     shadowOffset: {
@@ -154,20 +171,24 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
   },
 
-  information: {
-    flex: 1,
+  name: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 
-  name: {
-    paddingTop: 10,
-    fontSize: 20,
-    fontWeight: "bold",
+  infoWithIcon: {
+    flexDirection: "row",
+    marginVertical: 4,
   },
 
   info: {
     fontSize: 15,
     paddingTop: 5,
+    textAlign: "center",
   },
+
+  infoIcon: {},
 
   viewContainer: {
     justifyContent: "center",
@@ -195,5 +216,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "stretch",
+  },
+
+  capsules: {
+    // flex: 1,
   },
 });
