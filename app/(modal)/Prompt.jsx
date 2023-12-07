@@ -36,6 +36,26 @@ const Prompt = () => {
     // }
   };
 
+  const getCurrentDateTime = () => {
+    const currentDate = new Date();
+    const isoDateTime = currentDate.toISOString().slice(0, 16); // Get the date and time in "YYYY-MM-DDTHH:mm" format
+    return isoDateTime;
+  };
+
+  const capsule = {
+    id: "1",
+    question: "What's one thing that made you smile today",
+    category: "fun",
+    answer: { response },
+    dateTime: getCurrentDateTime(),
+    location: {
+      name: "Stanford Campus",
+      lat: 37.43358803600001,
+      long: -122.18041604630488,
+    },
+    tags: { chosenTags },
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
