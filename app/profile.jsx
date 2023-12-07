@@ -1,6 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { YourCapsules } from "@/components/YourCapsules";
 import { CapsuleCardHorizontalList } from "@/components/CapsuleCard";
 import Colors from "@/constants/Colors";
@@ -31,7 +38,7 @@ const Profile = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* profile pic + information */}
       <View style={styles.profileContainer}>
         <View style={styles.profileHeader}>
@@ -88,7 +95,7 @@ const Profile = () => {
           <CapsuleCardHorizontalList cabinet={allCapsulesCabinet} />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

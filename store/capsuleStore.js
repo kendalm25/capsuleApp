@@ -164,12 +164,30 @@ const sentCapsules = [
   },
 ];
 
+const justViewedCapsules = [
+  {
+    id: "1",
+    question: "What's one sport you've always wanted to try?",
+    category: "random",
+    answer:
+      "I really wanted to try ballet dancing when I was younger but it was too expensive.",
+    dateTime: "2023-11-29T12:00",
+    location: {
+      name: "Stanford Campus",
+      lat: 37.41980917493959,
+      long: -122.15115173659909,
+    },
+    tags: ["fun"],
+  },
+];
+
 export const useCapsuleStore = create((set, get) => ({
   // State
   capsulePrompts: [...fakeCapsulePrompts],
   capsules: [...fakeCapsules],
   cabinets: [...fakeCabinets],
   sentCapsules: [...sentCapsules],
+  justViewedCapsules: [...justViewedCapsules],
 
   // Actions
   addCapsuleToCabinet: (cabinetId, capsule) =>
