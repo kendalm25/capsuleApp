@@ -1,7 +1,7 @@
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 
@@ -10,6 +10,7 @@ import Profile from "@/app/profile";
 import Capsules from "@/app/capsules";
 import CreateCabinet from "@/app/(modal)/CreateCabinet";
 import Capsule from "@/app/(modal)/Capsule";
+import logo from "../assets/Images/capsule-logo.png";
 
 const Stack = createNativeStackNavigator(); // Stack contains Screen & Navigator properties
 
@@ -18,7 +19,12 @@ const index = () => {
 
   return (
     <>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          animation: "none",
+        }}
+      >
         <Stack.Screen
           name="Home"
           options={{
@@ -120,7 +126,7 @@ const NavBar = () => {
         <Ionicons
           name={activeTab === "capsules" ? "cube" : "cube-outline"}
           size={28}
-          color={Colors.primary}
+          color="black"
         />
         <Text>Capsules</Text>
       </TouchableOpacity>
@@ -128,11 +134,13 @@ const NavBar = () => {
         style={styles.navItem}
         onPress={() => navigation.navigate("Home")}
       >
-        <Ionicons
+        {/* <Ionicons
           name={activeTab === "index" ? "home" : "home-outline"}
           size={28}
           color={Colors.primary}
-        />
+        /> */}
+        <Image source={logo} style={styles.logo} />
+
         <Text>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -142,7 +150,7 @@ const NavBar = () => {
         <Ionicons
           name={activeTab === "profile" ? "person" : "person-outline"}
           size={28}
-          color={Colors.primary}
+          color="black"
         />
         <Text>Profile</Text>
       </TouchableOpacity>
@@ -161,5 +169,10 @@ const styles = StyleSheet.create({
   },
   navItem: {
     alignItems: "center",
+  },
+
+  logo: {
+    height: 30,
+    resizeMode: "contain",
   },
 });
