@@ -62,7 +62,7 @@ const Prompt = () => {
         <View>
           <TouchableOpacity
             style={{
-              backgroundColor: "#fff",
+              backgroundColor: Colors.base,
               borderRadius: 20,
               padding: 6,
             }}

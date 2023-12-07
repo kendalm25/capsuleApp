@@ -49,11 +49,11 @@ const NavigationBar = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.base,
   },
   container: {
     // height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.base,
     flexDirection: "row",
     gap: 20,
     alignItems: "center",
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     // height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.base,
   },
   searchSection: {
     flexDirection: "row",
