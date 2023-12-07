@@ -63,24 +63,33 @@ const Home = () => {
 
   if (promptAvailable) {
     promptInformation = (
-      <TouchableOpacity style={{ alignItems: "center", marginTop: 20 }}>
-        <View style={cardStyle.root}>
-          <View style={styles.promptAvailContainer}>
-            {/* <MaterialCommunityIcons name="star" size={24} color="black" /> */}
-            <Text style={styles.promptAvailText}>New Prompt is Available</Text>
-            <MaterialCommunityIcons
-              name="lightbulb-on-outline"
-              size={24}
-              color="black"
-            />
+      <Link
+        href={{
+          pathname: "/(modal)/Prompt",
+        }}
+        asChild
+      >
+        <TouchableOpacity style={{ alignItems: "center", marginTop: 20 }}>
+          <View style={cardStyle.root}>
+            <View style={styles.promptAvailContainer}>
+              {/* <MaterialCommunityIcons name="star" size={24} color="black" /> */}
+              <Text style={styles.promptAvailText}>
+                New Prompt is Available
+              </Text>
+              <MaterialCommunityIcons
+                name="lightbulb-on-outline"
+                size={24}
+                color="black"
+              />
+            </View>
+            <View style={cardStyle.text}>
+              <Text numberOfLines={3} style={cardStyle.question}>
+                What's one thing that made you smile today?
+              </Text>
+            </View>
           </View>
-          <View style={cardStyle.text}>
-            <Text numberOfLines={3} style={cardStyle.question}>
-              Name one thing that made you smile today.
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </Link>
     );
   } else {
     promptInformation = (
@@ -249,7 +258,8 @@ const cardStyle = StyleSheet.create({
     },
     shadowOpacity: 0.06,
     shadowRadius: 6,
-    marginEnd: 10,
+    marginVertical: 20,
+    // marginEnd: 10,
   },
   addCapsule: {
     width: 250,
