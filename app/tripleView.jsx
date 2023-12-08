@@ -14,6 +14,7 @@ import { useCapsuleStore } from "@/store/capsuleStore";
 import { Link, useRouter } from "expo-router";
 import Toolbar from "@/components/ToolBar";
 import MapView, { Marker } from "react-native-maps";
+import Capsules from "@/components/Capsules";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -33,16 +34,26 @@ export default function TripleView() {
     );
   });
 
-  const cabinetsWithCapsules = cabinets.map((cabinet) => {
-    const cabinetCapsules = cabinet.capsule_ids.map((capsuleId) => {
-      return filteredCapsules.find((capsule) => capsule.id === capsuleId);
+  const cabinetsWithCapsules = cabinets
+    .map((cabinet) => {
+      const cabinetCapsules = cabinet.capsule_ids.map((capsuleId) => {
+        return filteredCapsules.find((capsule) => capsule.id === capsuleId);
+      });
+      return { ...cabinet, capsules: cabinetCapsules };
+    })
+    .sort((a, b) => {
+      if (a.editedAt > b.editedAt) {
+        return -1;
+      } else if (a.editedAt < b.editedAt) {
+        return 1;
+      } else {
+        return 0;
+      }
     });
-    return { ...cabinet, capsules: cabinetCapsules };
-  });
 
   const ScreensNavigator = () => {
     if (currentScreen === "Capsules") {
-      return <View style={{ flex: 1, backgroundColor: "red" }}></View>;
+      return <Capsules capsules={filteredCapsules} />;
     } else if (currentScreen === "Map") {
       return <Map capsules={filteredCapsules} />;
     } else if (currentScreen === "Cabinets") {
@@ -91,7 +102,7 @@ function Cabinets({ cabinetsWithCapsules, capsules }) {
     >
       {/* Different cabinets */}
       {cabinetsWithCapsules.map((cabinet) => (
-        <CabinetHorizontalList cabinet={cabinet} />
+        <CabinetHorizontalList key={cabinet.id} cabinet={cabinet} />
       ))}
       <CabinetHorizontalList cabinet={allCapsulesCabinet} />
 

@@ -148,11 +148,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 4,
     borderColor: Colors.base300,
-    backgroundColor: "#fff",
+    backgroundColor: "#fafafa",
   },
   dropdownHeader: {
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#fafafa",
     borderWidth: 1,
     borderColor: Colors.base300,
     borderRadius: 4,

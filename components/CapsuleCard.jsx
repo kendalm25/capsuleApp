@@ -84,8 +84,6 @@ export const CapsuleCardHorizontalList = ({ cabinet }) => {
 };
 
 export const CabinetHorizontalList = ({ cabinet }) => {
-  console.log("cabinet", cabinet);
-
   // only show cabinets with capsules
   return (
     <View key={cabinet.id}>

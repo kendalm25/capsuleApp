@@ -440,7 +440,7 @@ ParallaxScrollView.propTypes = IPropTypes;
 
 ParallaxScrollView.defaultProps = {
   backgroundScrollSpeed: 5,
-  backgroundColor: "#000",
+  backgroundColor: "#fafafa",
   contentBackgroundColor: Colors.base,
   fadeOutForeground: true,
   onChangeHeaderVisibility: () => {},

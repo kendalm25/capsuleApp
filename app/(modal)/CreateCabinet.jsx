@@ -19,7 +19,6 @@ import { TagsBadges } from "@/components/Badge";
 
 /**
  * CreateCabinet
- *
  * screen used for creating a new cabinet or editing an existing cabinet
  */
 export default function CreateCabinet() {
@@ -60,6 +59,7 @@ export default function CreateCabinet() {
       name: cabinetName,
       tags: cabinetTags,
       capsule_ids: capsuleIds,
+      editedAt: new Date(),
     });
 
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -85,6 +85,7 @@ export default function CreateCabinet() {
       name: cabinetName,
       tags: cabinetTags,
       createdAt: new Date(),
+      editedAt: new Date(),
       capsule_ids: capsuleIds,
     });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);

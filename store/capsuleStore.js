@@ -309,6 +309,8 @@ const fakeCabinets = [
     tags: ["food", "study", "hangout"],
     createdAt: "2021-06-01",
     capsule_ids: ["5", "2"],
+    createdAt: new Date("2023-11-28"),
+    editedAt: new Date("2023-11-28"),
   },
 ];
 
@@ -382,7 +384,7 @@ function getUniqueTagsAndCategories(capsules) {
   };
 }
 
-console.log(getUniqueTagsAndCategories(fakeCapsules));
+getUniqueTagsAndCategories(fakeCapsules);
 
 export const useCapsuleStore = create((set, get) => ({
   // State
@@ -441,9 +443,7 @@ export const useCapsuleStore = create((set, get) => ({
     }),
 
   getCabinet: (cabinet_id) => {
-    console.log("getState", get());
     const cabinet = get().cabinets.find((c) => c.id === cabinet_id);
-    console.log("cabinet_id", cabinet_id, "getCabinet", cabinet);
     if (cabinet) {
       return cabinet;
     } else {

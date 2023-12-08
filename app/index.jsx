@@ -8,7 +8,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 import Home from "@/app/home";
 import Profile from "@/app/profile";
-import Capsules from "@/app/capsules";
+import TripleView from "@/app/tripleView";
 import CreateCabinet from "@/app/(modal)/CreateCabinet";
 import Capsule from "@/app/(modal)/Capsule";
 // import logo from "../assets/Images/capsule-logo.png";
@@ -47,7 +47,7 @@ const index = () => {
             headerShown: false,
             animation: "none",
           }}
-          component={Capsules}
+          component={TripleView}
         />
 
         <Stack.Screen
