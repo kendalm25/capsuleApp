@@ -8,8 +8,37 @@ import { TagsBadges } from "@/components/Badge";
 
 const Capsule = () => {
   const { id } = useLocalSearchParams();
-  const { capsules } = useCapsuleStore();
-  const capsule = capsules.find((capsule) => capsule.id === id);
+  const { capsules, updateCapsuleViewedAt, promptAnswered, addCapsule } =
+    useCapsuleStore();
+
+  let capsule = null;
+  if (id === "received") {
+    capsule = promptAnswered.capsule;
+  } else {
+    capsule = capsules.find((capsule) => capsule.id === id);
+  }
+
+  const newReceivedCapsule = {
+    id: 99,
+    question: "What's one sport you've always wanted to try?",
+    category: "random",
+    answer:
+      "I really wanted to try ballet dancing when I was younger but it was too expensive.",
+    dateTime: "2023-11-29T12:00",
+    viewedAt: "2023-11-29T12:00",
+    location: {
+      name: "Stanford Campus",
+      lat: 37.41980917493959,
+      long: -122.15115173659909,
+    },
+    tags: ["fun"],
+  };
+
+  if (capsule === undefined) {
+    capsule = newReceivedCapsule;
+    // add this capsule to the capsules array in the store
+    // addCapsule(capsule);
+  }
 
   return (
     <View style={styles.container}>

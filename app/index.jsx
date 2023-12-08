@@ -11,6 +11,8 @@ import Profile from "@/app/profile";
 import TripleView from "@/app/tripleView";
 import CreateCabinet from "@/app/(modal)/CreateCabinet";
 import Capsule from "@/app/(modal)/Capsule";
+import AnswerPrompt from "@/app/(modal)/AnswerPrompt";
+
 // import logo from "../assets/Images/capsule-logo.png";
 import logo from "@/assets/Images/logo.png";
 import logoOutline from "@/assets/Images/logo-outline.png";
@@ -75,6 +77,33 @@ const index = () => {
             ),
           }}
           component={CreateCabinet}
+        />
+
+        <Stack.Screen
+          name="(modal)/AnswerPrompt"
+          options={{
+            presentation: "modal",
+            headerTitle: "Answer Prompt",
+
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{
+                  borderRadius: 20,
+                  padding: 6,
+                }}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={28}
+                  color={Colors.primary}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+          component={AnswerPrompt}
         />
 
         <Stack.Screen
