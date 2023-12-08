@@ -4,13 +4,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 import Home from "@/app/home";
 import Profile from "@/app/profile";
-import Capsules from "@/app/capsules";
+import TripleView from "@/app/tripleView";
 import CreateCabinet from "@/app/(modal)/CreateCabinet";
 import Capsule from "@/app/(modal)/Capsule";
-import logo from "../assets/Images/capsule-logo.png";
+// import logo from "../assets/Images/capsule-logo.png";
+import logo from "@/assets/Images/logo.png";
+import logoOutline from "@/assets/Images/logo-outline.png";
 
 const Stack = createNativeStackNavigator(); // Stack contains Screen & Navigator properties
 
@@ -19,16 +22,12 @@ const index = () => {
 
   return (
     <>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          animation: "none",
-        }}
-      >
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           options={{
             headerShown: false,
+            animation: "none",
           }}
           component={Home}
         />
@@ -37,6 +36,7 @@ const index = () => {
           name="Profile"
           options={{
             headerShown: false,
+            animation: "none",
           }}
           component={Profile}
         />
@@ -44,9 +44,10 @@ const index = () => {
         <Stack.Screen
           name="Capsules"
           options={{
-            headerTitle: "Capsules",
+            headerShown: false,
+            animation: "none",
           }}
-          component={Capsules}
+          component={TripleView}
         />
 
         <Stack.Screen
@@ -58,7 +59,6 @@ const index = () => {
             headerLeft: () => (
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#fff",
                   borderRadius: 20,
                   padding: 6,
                 }}
@@ -86,7 +86,6 @@ const index = () => {
             headerLeft: () => (
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#fff",
                   borderRadius: 20,
                   padding: 6,
                 }}
@@ -115,7 +114,8 @@ export default index;
 
 const NavBar = () => {
   const navigation = useNavigation();
-  const activeTab = useRoute().name; // TODO fix this... broken
+  const route = useRoute();
+  const activeTab = getFocusedRouteNameFromRoute(route) ?? "Home";
 
   return (
     <View style={styles.navBar}>
@@ -124,7 +124,7 @@ const NavBar = () => {
         onPress={() => navigation.navigate("Capsules")}
       >
         <Ionicons
-          name={activeTab === "capsules" ? "cube" : "cube-outline"}
+          name={activeTab === "Capsules" ? "cube" : "cube-outline"}
           size={28}
           color="black"
         />
@@ -134,13 +134,10 @@ const NavBar = () => {
         style={styles.navItem}
         onPress={() => navigation.navigate("Home")}
       >
-        {/* <Ionicons
-          name={activeTab === "index" ? "home" : "home-outline"}
-          size={28}
-          color={Colors.primary}
-        /> */}
-        <Image source={logo} style={styles.logo} />
-
+        <Image
+          source={activeTab === "Home" ? logo : logoOutline}
+          style={styles.logo}
+        />
         <Text>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -148,7 +145,7 @@ const NavBar = () => {
         onPress={() => navigation.navigate("Profile")}
       >
         <Ionicons
-          name={activeTab === "profile" ? "person" : "person-outline"}
+          name={activeTab === "Profile" ? "person" : "person-outline"}
           size={28}
           color="black"
         />
@@ -161,18 +158,22 @@ const NavBar = () => {
 const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: Colors.base,
+    justifyContent: "space-evenly",
+    backgroundColor: Colors.white,
     borderTopWidth: 1,
-    borderTopColor: "#ddd",
+    borderTopColor: Colors.base300,
     paddingVertical: 10,
+    paddingHorizontal: 30,
   },
   navItem: {
     alignItems: "center",
+    flexDirection: "column",
+    backgroundColor: Colors.white,
   },
 
   logo: {
     height: 30,
     resizeMode: "contain",
+    backgroundColor: Colors.white,
   },
 });

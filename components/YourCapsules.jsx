@@ -7,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 export const YourCapsules = () => {
   const { capsulePrompts } = useCapsuleStore();
 
-  // console.log(capsulePrompts);
   return (
     <ScrollView
       horizontal
@@ -17,7 +16,7 @@ export const YourCapsules = () => {
       }}
     >
       {capsulePrompts.map((capsulePrompt, index) => {
-        // console.log(index, capsulePrompt);
+        // (index, capsulePrompt);
         const date = new Date(capsulePrompt.releaseDate).toLocaleDateString();
 
         return (
@@ -45,7 +44,7 @@ export const YourCapsules = () => {
 
 
 const CapsuleStatus = (capsuleStatus) => {
-  // console.log("capsuleStatus", capsuleStatus);
+  // ("capsuleStatus", capsuleStatus);
   switch (capsuleStatus) {
     case "locked":
       return "lock-closed";

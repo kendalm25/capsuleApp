@@ -28,7 +28,7 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
   return (
     <BottomSheetModal
       handleIndicatorStyle={{ display: "none" }}
-      backgroundStyle={{ borderRadius: 0, backgroundColor: Colors.lightGrey }}
+      backgroundStyle={{ borderRadius: 0, backgroundColor: Colors.base }}
       overDragResistanceFactor={0}
       ref={ref}
       snapPoints={snapPoints}
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   activeText: {
-    color: "#fff",
+    color: Colors.base,
     fontWeight: "700",
   },
   toggleInactive: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: Colors.base,
     fontWeight: "bold",
   },
   subheader: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.base,
     padding: 16,
     borderColor: Colors.grey,
     borderWidth: 1,

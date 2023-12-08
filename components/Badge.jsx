@@ -74,4 +74,68 @@ const tagColors = {
   local: "#32CD32", // (Lime Green) to represent growth and collaboration within the community.
   shopping: "#DB7093", //(Pale Violet Red) symbolizing the fun and energy associated with discovering and acquiring new items
   random: "#778899", //(Light Slate Gray) to signify the unknown and a sense of mystery that comes with randomness
+  pastries: "#FFDAB9",
+  bakery: "#F5DEB3", // Wheat for warm and inviting bakeries
+  artisanal: "#DEB887", // Burlywood for craftsmanship and quality
+  jogging: "#48D1CC", // Medium Turquoise for activity and freshness
+  lake: "#1E90FF", // Dodger Blue for serenity and water
+  picnic: "#FFD700", // Gold for outdoor meals and sunshine
+  "hidden gem": "#FF69B4", // Hot Pink for excitement and discovery
+  "street food": "#FFA500", // Orange for vibrant and diverse food scenes
+  trucks: "#FF4500", // Orange Red for mobility and convenience
+  coffee: "#6B8E23", // Olive Drab for robustness and energy
+  date: "#FF69B4", // Hot Pink for romance and enjoyment
+  casual: "#F4A460", // Sandy Brown for relaxed and informal settings
+  gifts: "#BC8F8F", // Rosy Brown for thoughtfulness and care
+  souvenirs: "#DAA520", // Goldenrod for memorabilia and keepsakes
+  bookstore: "#8B4513", // Saddle Brown for knowledge and exploration
+  bike: "#228B22", // Forest Green for eco-friendliness and adventure
+  weekend: "#20B2AA", // Light Sea Green for leisure and enjoyment
+  scenic: "#66CDAA", // Medium Aquamarine for beauty and tranquility
+  stargazing: "#191970", // Midnight Blue for the night sky and wonder
+  observatory: "#483D8B", // Dark Slate Blue for discovery and learning
+  "farmers market": "#9ACD32", // Yellow Green for freshness and local produce
+  fresh: "#00FF7F", // Spring Green for freshness and vitality
+  friends: "#FFD700", // Gold for warmth and companionship
+  vintage: "#8B008B", // Dark Magenta for nostalgia and uniqueness
+  clothing: "#FFC0CB", // Pink for fashion and style
+  reading: "#556B2F", // Dark Olive Green for knowledge and reflection
+  unwind: "#4682B4", // Steel Blue for relaxation and calm
+  movie: "#A52A2A", // Brown for entertainment and escapism
+  theater: "#8B0000", // Dark Red for drama and performance
+  "night out": "#800000", // Maroon for excitement and nightlife
+  jazz: "#FF6347", // Tomato for soulfulness and rhythm
+  live: "#FF4500", // Orange Red for energy and immediacy
+  tech: "#4682B4", // Steel Blue for innovation and technology
+  meetup: "#32CD32", // Lime Green for community and interaction
+  community: "#4169E1", // Royal Blue for unity and belonging
+  sunrise: "#FFA07A", // Light Salmon for beginnings and beauty
+  view: "#87CEEB", // Sky Blue for vistas and clarity
+  "late night": "#696969", // Dim Gray for nocturnal activities
+  snack: "#FFD700", // Gold for quick bites and treats
+  "craft beer": "#CD853F", // Peru for variety and craftsmanship
+
+  food: "#FF6347", // Reusing existing color for food
+  fitness: "#48D1CC", // Medium Turquoise for activity and health
+  leisure: "#ADD8E6", // Light Blue for relaxation and leisure activities
+  social: "#FFD700", // Gold for social interactions and community
+  shopping: "#DB7093", // Reusing existing color for shopping
+  outdoors: "#3CB371", // Reusing existing color for outdoors
+  dining: "#FF4500", // Reusing existing color for restaurant/dining
+  relaxation: "#4682B4", // Steel Blue for calm and unwinding
+  entertainment: "#A52A2A", // Reusing color for movie/entertainment
+  music: "#FF6347", // Tomato for rhythm and vibrance
+  tech: "#4682B4", // Reusing existing color for tech
+  nature: "#32CD32", // Reusing existing color for local/nature
+  drinks: "#C71585", // Reusing existing color for bar/drinks
+
+  // New Tags
+  pastries: "#FFDAB9", // Peach Puff for sweetness and indulgence
+  bakery: "#F5DEB3", // Reusing existing color for bakery
+  artisanal: "#DEB887", // Reusing existing color for artisanal
+  jogging: "#48D1CC", // Reusing existing color for jogging
+  lake: "#1E90FF", // Reusing existing color for lake
+  picnic: "#FFD700", // Reusing existing color for picnic
+  "hidden gem": "#FF69B4", // Reusing existing color for hidden gem
+  "street food": "#FFA500", // Reusing existing color for street food
 };
