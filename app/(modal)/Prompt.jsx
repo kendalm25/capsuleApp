@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
 
   submitBtn: {
-    backgroundColor: "#32cd32",
+    backgroundColor: Colors.base,
     justifyContent: "center",
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -218,7 +218,6 @@ const styles = StyleSheet.create({
   },
 
   chosenTag: {
-    // backgroundColor: "#555555",
     backgroundColor: "#000",
     borderRadius: 20,
     padding: 8,

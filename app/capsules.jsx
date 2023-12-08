@@ -5,62 +5,54 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  Image,
 } from "react-native";
-import React from "react";
-import { YourCapsules } from "@/components/YourCapsules";
-import {
-  CapsuleCard,
-  CapsuleCardHorizontalList,
-} from "@/components/CapsuleCard";
+import React, { useState } from "react";
+import { CabinetHorizontalList } from "@/components/CapsuleCard";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useCapsuleStore } from "@/store/capsuleStore";
-import { Link } from "expo-router";
-import logo from "../assets/Images/capsule-logo.png";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Link, useRouter } from "expo-router";
+import Toolbar from "@/components/ToolBar";
+import MapView, { Marker } from "react-native-maps";
 
 const windowWidth = Dimensions.get("window").width;
 
-/**
- * Capsules
- *
- * screen used for displaying ALL capsules
- * 3 main sections:
- * - capsules you've received in their cabinets
- * - all capsules you've seen in full view in a vertical scroll layout
- * - map of capsules
- *
- * TRISTAN TODO: implement this screen
- */
-const Capsules = () => {
+export default function TripleView() {
   const { cabinets, capsules, capsulePrompts, justViewedCapsules } =
     useCapsuleStore();
+  const [currentScreen, setCurrentScreen] = useState("Capsules");
+  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState({});
 
-  //  join all the cabinets and capsules
+  const filteredCapsules = capsules.filter((capsule) => {
+    const { question, answer } = capsule;
+    const searchLower = search.toLowerCase();
+    return (
+      question.toLowerCase().includes(searchLower) ||
+      answer.toLowerCase().includes(searchLower)
+    );
+  });
+
   const cabinetsWithCapsules = cabinets.map((cabinet) => {
     const cabinetCapsules = cabinet.capsule_ids.map((capsuleId) => {
-      return capsules.find((capsule) => capsule.id === capsuleId);
+      return filteredCapsules.find((capsule) => capsule.id === capsuleId);
     });
     return { ...cabinet, capsules: cabinetCapsules };
   });
 
-  const allCapsulesCabinet = {
-    id: "all",
-    name: "All Capsules",
-    capsules: capsules,
-  };
-
-  const prompt = {
-    id: "1",
-    name: "prompt",
-    capsules: capsulePrompts,
-  };
-
-  const viewed = {
-    id: "all",
-    name: "Just Viewed",
-    capsules: justViewedCapsules,
+  const ScreensNavigator = () => {
+    if (currentScreen === "Capsules") {
+      return <View style={{ flex: 1, backgroundColor: "red" }}></View>;
+    } else if (currentScreen === "Map") {
+      return <Map capsules={filteredCapsules} />;
+    } else if (currentScreen === "Cabinets") {
+      return (
+        <Cabinets
+          cabinetsWithCapsules={cabinetsWithCapsules}
+          capsules={capsules}
+        />
+      );
+    }
   };
 
   if (!cabinetsWithCapsules) {
@@ -72,35 +64,36 @@ const Capsules = () => {
   }
 
   return (
+    <>
+      <Toolbar
+        currentScreen={currentScreen}
+        setCurrentScreen={setCurrentScreen}
+        search={search}
+        setSearch={setSearch}
+      />
+      <ScreensNavigator />
+    </>
+  );
+}
+
+function Cabinets({ cabinetsWithCapsules, capsules }) {
+  const allCapsulesCabinet = {
+    id: "all",
+    name: "All Capsules",
+    capsules: capsules,
+  };
+
+  return (
     <ScrollView
-      contentContainerStyle={{ paddingBottom: 40, backgroundColor: "white" }}
+      contentContainerStyle={{
+        paddingBottom: 40,
+      }}
     >
-      <View style={styles.header}>
-        <Text style={styles.navText}>YOUR CAPSULES</Text>
-      </View>
       {/* Different cabinets */}
       {cabinetsWithCapsules.map((cabinet) => (
-        <View key={cabinet.id}>
-          <View style={styles.cabinet}>
-            <Text style={styles.cabinetName}>{cabinet.name}</Text>
-            <Ionicons
-              style={styles.icon}
-              name="ios-chevron-forward"
-              size={20}
-            />
-          </View>
-          <CapsuleCardHorizontalList cabinet={cabinet} />
-        </View>
+        <CabinetHorizontalList cabinet={cabinet} />
       ))}
-
-      {/* Recently Viewed Capsules */}
-      {/* <View>
-        <View style={styles.cabinet}>
-          <Text style={styles.cabinetName}>Recently Viewed</Text>
-          <Ionicons style={styles.icon} name="ios-chevron-forward" size={20} />
-        </View>
-        <CapsuleCardHorizontalList cabinet={viewed} />
-      </View> */}
+      <CabinetHorizontalList cabinet={allCapsulesCabinet} />
 
       {/* Create new cabinets */}
       <Link href={{ pathname: "/(modal)/CreateCabinet" }} asChild>
@@ -117,9 +110,82 @@ const Capsules = () => {
       </Link>
     </ScrollView>
   );
-};
+}
 
-export default Capsules;
+function Map({ capsules }) {
+  const router = useRouter();
+  const initialRegion = capsules.reduce(
+    (acc, capsule, index, array) => {
+      const { lat, long } = capsule.location;
+
+      acc.latitude += lat;
+      acc.longitude += long;
+
+      acc.maxLatitude = Math.max(acc.maxLatitude, lat);
+      acc.minLatitude = Math.min(acc.minLatitude, lat);
+      acc.maxLongitude = Math.max(acc.maxLongitude, long);
+      acc.minLongitude = Math.min(acc.minLongitude, long);
+
+      if (index === array.length - 1) {
+        acc.latitude /= array.length;
+        acc.longitude /= array.length;
+
+        if (array.length === 1) {
+          // min max to make sure the delta is 0.01
+          acc.maxLatitude = 0.05;
+          acc.minLatitude = 0;
+          acc.maxLongitude = 0.05;
+          acc.minLongitude = 0;
+        }
+      }
+
+      return acc;
+    },
+    {
+      latitude: 0,
+      longitude: 0,
+      maxLatitude: -Infinity,
+      minLatitude: Infinity,
+      maxLongitude: -Infinity,
+      minLongitude: Infinity,
+    }
+  );
+
+  if (capsules.length === 0) {
+    return (
+      <View style={{ flex: 1 }}>
+        <Text>No capsules found</Text>
+      </View>
+    );
+  }
+
+  return (
+    <MapView
+      style={{ flex: 1 }}
+      initialRegion={{
+        latitude: initialRegion.latitude,
+        longitude: initialRegion.longitude,
+        latitudeDelta: initialRegion.maxLatitude - initialRegion.minLatitude,
+        longitudeDelta: initialRegion.maxLongitude - initialRegion.minLongitude,
+      }}
+    >
+      {capsules.map((capsule) => (
+        <Marker
+          key={capsule.id}
+          coordinate={{
+            latitude: capsule.location.lat,
+            longitude: capsule.location.long,
+          }}
+          title={capsule.question}
+          description={capsule.answer}
+          onCalloutPress={() => {
+            router.push(`/(modal)/Capsule?id=${capsule.id}`);
+          }}
+        />
+      ))}
+    </MapView>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -203,76 +269,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: Colors.base950,
-  },
-});
-
-const cardStyle = StyleSheet.create({
-  root: {
-    // width: windowWidth * 0.7,
-    maxWidth: windowWidth * 0.8,
-    height: 150,
-    padding: 18,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    rowGap: 6,
-    columnGap: 6,
-    borderRadius: 10,
-    borderWidth: 3,
-    borderStyle: "solid",
-    borderColor: Colors.base300,
-    backgroundColor: Colors.base,
-    shadowColor: Colors.base950,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    marginVertical: 20,
-    // marginEnd: 10,
-  },
-  addCapsule: {
-    width: 250,
-    height: 175,
-    padding: 12,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    rowGap: 6,
-    columnGap: 6,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: Colors.base300,
-    backgroundColor: Colors.base,
-    shadowColor: Colors.base950,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    marginEnd: 10,
-  },
-
-  text: {
-    // justifyContent: "center",
-  },
-
-  question: {
-    // textAlign: "center",
-    alignSelf: "stretch",
-    fontSize: 18,
-    fontWeight: "600",
-    justifyContent: "center",
-  },
-
-  answer: {
-    alignSelf: "stretch",
-    overflow: "hidden",
-    fontSize: 16,
-    color: Colors.base700,
-    marginTop: 4,
   },
 });

@@ -9,20 +9,20 @@ import {
 import React from "react";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Colors from "@/constants/Colors";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
-import { useCapsuleStore } from "@/store/capsuleStore";
+import { SUBSET_TAGS, useCapsuleStore } from "@/store/capsuleStore";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import uuid from "react-native-uuid";
-import { TAGS } from "@/store/capsuleStore";
+import { cardStyle } from "@/components/CapsuleCard";
+import { TagsBadges } from "@/components/Badge";
 
 /**
  * CreateCabinet
  *
  * screen used for creating a new cabinet or editing an existing cabinet
  */
-const CreateCabinet = () => {
+export default function CreateCabinet() {
   const { createCabinet, capsules, getCabinet, editCabinet } =
     useCapsuleStore();
 
@@ -66,6 +66,14 @@ const CreateCabinet = () => {
     router.back();
   };
 
+  function toggleTag(tag) {
+    if (cabinetTags.includes(tag)) {
+      setCabinetTags(cabinetTags.filter((t) => t !== tag));
+    } else {
+      setCabinetTags([...cabinetTags, tag]);
+    }
+  }
+
   const handleCreateCabinet = () => {
     if (!cabinetName) {
       setError({ ...error, name: true });
@@ -82,10 +90,9 @@ const CreateCabinet = () => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     router.back();
   };
-
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 20 }}>
+      <View style={styles.innerContainer}>
         {/* Type a name */}
         <View style={styles.section}>
           <View style={styles.header}>
@@ -112,36 +119,30 @@ const CreateCabinet = () => {
               <Ionicons style={styles.icon} name="alert-circle" size={30} />
             )}
           </View>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-            {TAGS.map((tag) => (
+          <View style={styles.tagContainer}>
+            {SUBSET_TAGS.map((tag) => (
               <TouchableOpacity
                 key={tag}
-                style={{
-                  backgroundColor: cabinetTags.includes(tag)
-                    ? Colors.primary
-                    : Colors.base300,
-
-                  padding: 8,
-                  borderRadius: 8,
-                  marginRight: 8,
-                  marginBottom: 8,
-                }}
-                onPress={() => {
-                  if (cabinetTags.includes(tag)) {
-                    setCabinetTags(cabinetTags.filter((t) => t !== tag));
-                  } else {
-                    setCabinetTags([...cabinetTags, tag]);
-                  }
-                }}
+                style={[
+                  styles.tagButton,
+                  {
+                    backgroundColor: cabinetTags.includes(tag)
+                      ? Colors.primary
+                      : Colors.base300,
+                  },
+                ]}
+                onPress={() => toggleTag(tag)}
               >
                 <Text
-                  style={{
-                    color: cabinetTags.includes(tag)
-                      ? Colors.base
-                      : Colors.base950,
-                    fontSize: 16,
-                    fontWeight: cabinetTags.includes(tag) ? "bold" : "normal",
-                  }}
+                  style={[
+                    styles.tagText,
+                    {
+                      fontWeight: cabinetTags.includes(tag) ? "bold" : "normal",
+                      color: cabinetTags.includes(tag)
+                        ? Colors.base
+                        : Colors.base950,
+                    },
+                  ]}
                 >
                   {tag}
                 </Text>
@@ -151,23 +152,27 @@ const CreateCabinet = () => {
         </View>
 
         {/* Add Recent Capsules */}
-        <View>
-          <View style={{ ...styles.header, paddingHorizontal: 20 }}>
-            <Text style={styles.title}>Add Recent Capsules</Text>
+        <View style={styles.recentCapsulesContainer}>
+          <View style={[styles.header, styles.recentCapsulesHeader]}>
+            <Text style={{ ...styles.title, paddingHorizontal: 20 }}>
+              Add Recent Capsules
+            </Text>
             {/* Optionally show alert icon if there is an error set for a field */}
             {error.capsules && (
               <Ionicons style={styles.icon} name="alert-circle" size={30} />
             )}
           </View>
+
+          {/* for all the capsules in all CreateCabinetCapsuleCard */}
           <ScrollView
-            horizontal
+            horizontal={true}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
               paddingHorizontal: 16,
-              paddingVertical: 6,
+              paddingBottom: 16,
             }}
           >
-            {capsules.map((capsule, index) => (
+            {capsules.map((capsule) => (
               <TouchableOpacity
                 key={capsule.id}
                 style={{
@@ -203,19 +208,16 @@ const CreateCabinet = () => {
                   }
                 }}
               >
-                <View
-                  style={{
-                    alignSelf: "stretch",
-                    fontSize: 18,
-                    fontWeight: "600",
-                  }}
-                >
-                  <Text numberOfLines={3} style={styles.question}>
+                <View style={cardStyle.text}>
+                  <Text numberOfLines={3} style={cardStyle.question}>
                     {capsule.question}
                   </Text>
-                  <Text numberOfLines={2} style={styles.answer}>
+                  <Text numberOfLines={2} style={cardStyle.answer}>
                     {capsule.answer}
                   </Text>
+                </View>
+                <View style={cardStyle.badgeList}>
+                  <TagsBadges tags={capsule.tags} />
                 </View>
               </TouchableOpacity>
             ))}
@@ -233,27 +235,15 @@ const CreateCabinet = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.base,
   },
-  image: {
-    width: "100%",
-    height: 300,
-  },
-  dishName: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  recentCapsules: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-    paddingHorizontal: 20,
+  innerContainer: {
+    marginTop: 20,
   },
   title: {
     fontSize: 24,
@@ -269,13 +259,36 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   section: {
-    // marginTop: 20,
-    // marginBottom: 12,
     paddingHorizontal: 20,
   },
-  dishInfo: {
+  input: {
+    height: 40,
+    borderColor: Colors.base300,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 20,
+  },
+  tagContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginBottom: 20,
+  },
+  tagButton: {
+    padding: 8,
+    borderRadius: 8,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  tagText: {
+    // color: Colors.base950,
     fontSize: 16,
-    color: Colors.mediumDark,
+  },
+  recentCapsulesContainer: {
+    // paddingHorizontal: 20,
+  },
+  recentCapsulesHeader: {
+    paddingHorizontal: 0,
   },
   footer: {
     position: "absolute",
@@ -289,7 +302,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -10 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
-    paddingTop: 20,
+    // paddingTop: 20,
+    paddingBottom: 40,
   },
   fullButton: {
     backgroundColor: Colors.primary,
@@ -302,56 +316,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  input: {
-    height: 40,
-    borderColor: Colors.base300,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  root: {
-    width: 250,
-    height: 175,
-    padding: 12,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    rowGap: 6,
-    columnGap: 6,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: Colors.base300,
-    backgroundColor: Colors.base,
-    shadowColor: Colors.base950,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    marginEnd: 10,
-  },
-  question: {
-    alignSelf: "stretch",
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  answer: {
-    alignSelf: "stretch",
-    overflow: "hidden",
-    fontSize: 16,
-    color: Colors.base700,
-    marginTop: 4,
-  },
-  badgeList: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    alignContent: "flex-start",
-    rowGap: 6,
-    columnGap: 6,
-    flexWrap: "wrap",
-  },
 });
-
-export default CreateCabinet;

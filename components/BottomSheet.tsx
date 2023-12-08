@@ -28,7 +28,7 @@ const BottomSheet = forwardRef<Ref>((props, ref) => {
   return (
     <BottomSheetModal
       handleIndicatorStyle={{ display: "none" }}
-      backgroundStyle={{ borderRadius: 0, backgroundColor: Colors.lightGrey }}
+      backgroundStyle={{ borderRadius: 0, backgroundColor: Colors.base }}
       overDragResistanceFactor={0}
       ref={ref}
       snapPoints={snapPoints}

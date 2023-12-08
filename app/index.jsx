@@ -168,10 +168,12 @@ const styles = StyleSheet.create({
   navItem: {
     alignItems: "center",
     flexDirection: "column",
+    backgroundColor: Colors.white,
   },
 
   logo: {
     height: 30,
     resizeMode: "contain",
+    backgroundColor: Colors.white,
   },
 });

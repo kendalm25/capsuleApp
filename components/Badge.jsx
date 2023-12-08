@@ -114,4 +114,28 @@ const tagColors = {
   "late night": "#696969", // Dim Gray for nocturnal activities
   snack: "#FFD700", // Gold for quick bites and treats
   "craft beer": "#CD853F", // Peru for variety and craftsmanship
+
+  food: "#FF6347", // Reusing existing color for food
+  fitness: "#48D1CC", // Medium Turquoise for activity and health
+  leisure: "#ADD8E6", // Light Blue for relaxation and leisure activities
+  social: "#FFD700", // Gold for social interactions and community
+  shopping: "#DB7093", // Reusing existing color for shopping
+  outdoors: "#3CB371", // Reusing existing color for outdoors
+  dining: "#FF4500", // Reusing existing color for restaurant/dining
+  relaxation: "#4682B4", // Steel Blue for calm and unwinding
+  entertainment: "#A52A2A", // Reusing color for movie/entertainment
+  music: "#FF6347", // Tomato for rhythm and vibrance
+  tech: "#4682B4", // Reusing existing color for tech
+  nature: "#32CD32", // Reusing existing color for local/nature
+  drinks: "#C71585", // Reusing existing color for bar/drinks
+
+  // New Tags
+  pastries: "#FFDAB9", // Peach Puff for sweetness and indulgence
+  bakery: "#F5DEB3", // Reusing existing color for bakery
+  artisanal: "#DEB887", // Reusing existing color for artisanal
+  jogging: "#48D1CC", // Reusing existing color for jogging
+  lake: "#1E90FF", // Reusing existing color for lake
+  picnic: "#FFD700", // Reusing existing color for picnic
+  "hidden gem": "#FF69B4", // Reusing existing color for hidden gem
+  "street food": "#FFA500", // Reusing existing color for street food
 };

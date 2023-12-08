@@ -12,6 +12,9 @@ import { TagsBadges } from "@/components/Badge";
 import { Ionicons } from "@expo/vector-icons";
 
 export const CapsuleCard = ({ capsule }) => {
+  if (capsule === undefined) {
+    return <></>;
+  }
   return (
     <Link
       href={{ pathname: "/(modal)/Capsule", params: { id: capsule.id } }}
@@ -39,6 +42,11 @@ export const CapsuleCard = ({ capsule }) => {
 
 export const CapsuleCardHorizontalList = ({ cabinet }) => {
   const { capsules, id } = cabinet;
+
+  // if capsules is empty, return nothing
+  if (capsules.length === 0) {
+    return <></>;
+  }
 
   return (
     <ScrollView
@@ -75,7 +83,62 @@ export const CapsuleCardHorizontalList = ({ cabinet }) => {
   );
 };
 
-const cardStyle = StyleSheet.create({
+export const CabinetHorizontalList = ({ cabinet }) => {
+  console.log("cabinet", cabinet);
+
+  // only show cabinets with capsules
+  return (
+    <View key={cabinet.id}>
+      <View style={cabinetStyle.cabinet}>
+        <Text style={cabinetStyle.cabinetName}>{cabinet.name}</Text>
+        <Ionicons
+          style={cabinetStyle.icon}
+          name="ios-chevron-forward"
+          size={20}
+        />
+      </View>
+      {/* {cabinet.capsules >= 0 && (
+        <CapsuleCardHorizontalList cabinet={cabinet} />
+      )} */}
+      {cabinet.capsules.length > 0 && (
+        <CapsuleCardHorizontalList cabinet={cabinet} />
+      )}
+    </View>
+  );
+};
+
+const cabinetStyle = StyleSheet.create({
+  capsuleTitle: {
+    textAlign: "center",
+    fontSize: 50,
+    fontWeight: "800",
+    color: Colors.base950,
+    marginVertical: 20,
+  },
+
+  icon: {
+    flexDirection: "row",
+    alignItems: "center",
+    color: Colors.base950,
+  },
+
+  cabinet: {
+    marginTop: 20,
+    marginBottom: 12,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "stretch",
+  },
+
+  cabinetName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: Colors.base950,
+  },
+});
+
+export const cardStyle = StyleSheet.create({
   root: {
     width: 250,
     height: 175,
