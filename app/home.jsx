@@ -23,7 +23,7 @@ const Home = () => {
   const {
     cabinets,
     capsules,
-    promptAnswered: { openedCapsule, responded, capsule },
+    promptAnswered: { openedCapsule, responded },
   } = useCapsuleStore();
 
   //  join all the cabinets and capsules
@@ -63,6 +63,7 @@ const Home = () => {
     capsules: capsules,
   };
 
+  console.log(openedCapsule, responded);
   return (
     <ScrollView
       contentContainerStyle={{ paddingBottom: 40, backgroundColor: "white" }}
@@ -79,7 +80,6 @@ const Home = () => {
           >
             <TouchableOpacity style={styles.newPromptButton}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {/* <MaterialCommunityIcons name="star" size={24} color="black" /> */}
                 <Text style={styles.newPromptButtonText}>
                   New Prompt is Available
                 </Text>
@@ -100,10 +100,11 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </Link>
-        ) : (
+        ) : !openedCapsule ? (
           <Link
             style={{ marginTop: 10 }}
-            href={{ pathname: "/(modal)/Capsule", params: { id: 999 } }}
+            href={{ pathname: "/(modal)/NewCapsule" }}
+            asChild
           >
             <TouchableOpacity style={styles.newCapsuleButton}>
               <View style={{ flexDirection: "col", alignItems: "center" }}>
@@ -116,6 +117,14 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </Link>
+        ) : (
+          <TouchableOpacity style={styles.newPromptButton}>
+            <View>
+              <Text numberOfLines={3} style={styles.noNewPrompt}>
+                No new prompts available.
+              </Text>
+            </View>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -130,7 +139,7 @@ export default Home;
 const styles = StyleSheet.create({
   layout: {
     flex: 1,
-    backgroundColor: Colors.base,
+    // backgroundColor: Colors.base,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -164,6 +173,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   newPromptButtonQuestionText: {
+    color: Colors.base950,
+    fontSize: 20,
+    marginTop: 10,
+  },
+  noNewPrompt: {
     color: Colors.base950,
     fontSize: 20,
   },

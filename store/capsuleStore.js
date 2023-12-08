@@ -449,6 +449,13 @@ export const useCapsuleStore = create((set, get) => ({
     });
   },
 
+  openCapsule: () => {
+    set((state) => {
+      state.promptAnswered.openedCapsule = true;
+      return { promptAnswered: state.promptAnswered };
+    });
+  },
+
   addCapsule: (capsule) =>
     set((state) => ({ capsules: [...state.capsules, capsule] })),
 
