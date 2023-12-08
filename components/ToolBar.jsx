@@ -16,9 +16,9 @@ const Toolbar = ({ currentScreen, setCurrentScreen, search, setSearch }) => {
       <View style={styles.toolbar}>
         <TextInput
           style={styles.searchInput}
+          placeholder="Search"
           onChangeText={setSearch}
           value={search}
-          placeholder="Search"
         />
       </View>
       <NavigationTabs
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 4,
     borderColor: Colors.base300,
-    backgroundColor: "#fafafa",
   },
+
   dropdownHeader: {
     padding: 10,
     backgroundColor: "#fafafa",

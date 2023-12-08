@@ -5,17 +5,16 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import React from "react";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
 import * as Haptics from "expo-haptics";
 import { SUBSET_TAGS, useCapsuleStore } from "@/store/capsuleStore";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import uuid from "react-native-uuid";
-import { cardStyle } from "@/components/CapsuleCard";
-import { TagsBadges } from "@/components/Badge";
 
 export default function AnswerPrompt() {
   const router = useRouter();
@@ -58,74 +57,78 @@ export default function AnswerPrompt() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        {/* Type a name */}
-        <View style={styles.section}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{capsule.question}</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          {/* Type a name */}
+          <View style={styles.section}>
+            <View style={styles.header}>
+              <Text style={styles.title}>{capsule.question}</Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Type your response to the prompt..."
+              onChangeText={setCapsuleAnswer}
+              value={capsuleAnswer}
+              multiline={true}
+              textAlignVertical="top"
+            />
           </View>
-          <TextInput
-            style={styles.input}
-            placeholder="Type your response to the prompt..."
-            onChangeText={setCapsuleAnswer}
-            value={capsuleAnswer}
-            multiline={true}
-            textAlignVertical="top"
-          />
-        </View>
 
-        {/* Select different tags for the cabinet */}
-        <View style={styles.section}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Tags</Text>
-            {/* Optionally show alert icon if there is an error set for a field */}
-            {error.tags && (
-              <Ionicons style={styles.icon} name="alert-circle" size={30} />
-            )}
-          </View>
-          <View style={styles.tagContainer}>
-            {SUBSET_TAGS.map((tag) => (
-              <TouchableOpacity
-                key={tag}
-                style={[
-                  styles.tagButton,
-                  {
-                    backgroundColor: cabinetTags.includes(tag)
-                      ? Colors.primary
-                      : Colors.base300,
-                  },
-                ]}
-                onPress={() => toggleTag(tag)}
-              >
-                <Text
+          {/* Select different tags for the cabinet */}
+          <View style={styles.section}>
+            <View style={styles.header}>
+              <Text style={styles.title}>Tags</Text>
+              {/* Optionally show alert icon if there is an error set for a field */}
+              {error.tags && (
+                <Ionicons style={styles.icon} name="alert-circle" size={30} />
+              )}
+            </View>
+            <View style={styles.tagContainer}>
+              {SUBSET_TAGS.map((tag) => (
+                <TouchableOpacity
+                  key={tag}
                   style={[
-                    styles.tagText,
+                    styles.tagButton,
                     {
-                      fontWeight: cabinetTags.includes(tag) ? "bold" : "normal",
-                      color: cabinetTags.includes(tag)
-                        ? Colors.base
-                        : Colors.base950,
+                      backgroundColor: cabinetTags.includes(tag)
+                        ? Colors.primary
+                        : Colors.base300,
                     },
                   ]}
+                  onPress={() => toggleTag(tag)}
                 >
-                  {tag}
-                </Text>
-              </TouchableOpacity>
-            ))}
+                  <Text
+                    style={[
+                      styles.tagText,
+                      {
+                        fontWeight: cabinetTags.includes(tag)
+                          ? "bold"
+                          : "normal",
+                        color: cabinetTags.includes(tag)
+                          ? Colors.base
+                          : Colors.base950,
+                      },
+                    ]}
+                  >
+                    {tag}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.fullButton}
-          onPress={handleCreateCapsuleResponse}
-        >
-          <Text style={styles.footerText}>Submit Capsule</Text>
-        </TouchableOpacity>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.fullButton}
+            onPress={handleCreateCapsuleResponse}
+          >
+            <Text style={styles.footerText}>Submit Capsule</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
