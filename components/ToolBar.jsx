@@ -52,7 +52,7 @@ const NavigationTabs = ({ currentScreen, setCurrentScreen }) => {
         onPress={() => setCurrentScreen("Cabinets")}
       >
         <Ionicons
-          name={currentScreen === "Cabinets" ? "cube" : "cube-outline"}
+          name={currentScreen === "Cabinets" ? "albums" : "albums-outline"}
           size={28}
           color="black"
         />
@@ -66,7 +66,7 @@ const NavigationTabs = ({ currentScreen, setCurrentScreen }) => {
         onPress={() => setCurrentScreen("Capsules")}
       >
         <Ionicons
-          name={currentScreen === "Capsules" ? "cube" : "cube-outline"}
+          name={currentScreen === "Capsules" ? "grid" : "grid-outline"}
           size={28}
           color="black"
         />
