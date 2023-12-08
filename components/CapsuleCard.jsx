@@ -61,7 +61,7 @@ export const CapsuleCardHorizontalList = ({ cabinet }) => {
         <CapsuleCard capsule={capsule} key={index} />
       ))}
 
-      {id !== "all" && (
+      {(id !== "all" || id !== "recent") && (
         <Link
           href={{
             pathname: "/CreateCabinet",
@@ -95,9 +95,6 @@ export const CabinetHorizontalList = ({ cabinet }) => {
           size={20}
         />
       </View>
-      {/* {cabinet.capsules >= 0 && (
-        <CapsuleCardHorizontalList cabinet={cabinet} />
-      )} */}
       {cabinet.capsules.length > 0 && (
         <CapsuleCardHorizontalList cabinet={cabinet} />
       )}

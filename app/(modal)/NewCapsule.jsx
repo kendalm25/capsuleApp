@@ -1,24 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { useLocalSearchParams } from "expo-router";
-import { useCapsuleStore } from "@/store/capsuleStore";
 import MapView, { Circle } from "react-native-maps";
 import Colors from "@/constants/Colors";
 import { TagsBadges } from "@/components/Badge";
+import { useCapsuleStore } from "@/store/capsuleStore";
 
-const Capsule = () => {
-  const { id } = useLocalSearchParams();
-  const { capsules, updateCapsuleViewedAt, promptAnswered, addCapsule } =
-    useCapsuleStore();
-
-  let capsule = null;
-  if (id === "received") {
-    capsule = promptAnswered.capsule;
-  } else {
-    capsule = capsules.find((capsule) => capsule.id === id);
-  }
-
-  const newReceivedCapsule = {
+const NewCapsule = () => {
+  const { openCapsule } = useCapsuleStore();
+  const capsule = {
     id: 99,
     question: "What's one sport you've always wanted to try?",
     category: "random",
@@ -34,11 +23,9 @@ const Capsule = () => {
     tags: ["fun"],
   };
 
-  if (capsule === undefined) {
-    capsule = newReceivedCapsule;
-    // add this capsule to the capsules array in the store
-    // addCapsule(capsule);
-  }
+  setTimeout(() => {
+    openCapsule();
+  }, 2000);
 
   return (
     <View style={styles.container}>
@@ -100,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Capsule;
+export default NewCapsule;

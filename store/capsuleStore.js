@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 const fakeCapsulePrompts = [
   {
+    id: 1,
     question: "Where do you go to take a break from studying?",
     category: "food",
     status: "expired",
@@ -9,6 +10,7 @@ const fakeCapsulePrompts = [
     answer: "",
   },
   {
+    id: 2,
     question: "What is your favorite place to eat on campus?",
     category: "food",
     status: "answered",
@@ -16,6 +18,7 @@ const fakeCapsulePrompts = [
     answer: "I love eating at the Axe and Palm!",
   },
   {
+    id: 3,
     question: "What is your favorite place to study on campus?",
     category: "study",
     status: "answered",
@@ -23,6 +26,7 @@ const fakeCapsulePrompts = [
     answer: "I love studying at the Green Library!",
   },
   {
+    id: 4,
     question: "What is your favorite place to hang out on campus?",
     category: "hangout",
     status: "answered",
@@ -30,6 +34,7 @@ const fakeCapsulePrompts = [
     answer: "I love hanging out at the Oval!",
   },
   {
+    id: 5,
     question: "What is your favorite place to eat off campus?",
     category: "food",
     status: "locked",
@@ -37,6 +42,7 @@ const fakeCapsulePrompts = [
     answer: "",
   },
   {
+    id: 6,
     question: "What is your favorite place to study off campus?",
     category: "study",
     status: "locked",
@@ -44,6 +50,7 @@ const fakeCapsulePrompts = [
     answer: "",
   },
   {
+    id: 7,
     question: "What is your favorite place to hang out off campus?",
     category: "hangout",
     status: "locked",
@@ -51,10 +58,11 @@ const fakeCapsulePrompts = [
     answer: "",
   },
   {
+    id: 8,
     question: "What is your favorite place to eat in the Bay Area?",
     category: "food",
     status: "locked",
-    releaseDate: new Date("2023-12-07"),
+    releaseDate: new Date("2023-12-08"),
     answer: "",
   },
 ];
@@ -67,6 +75,7 @@ const fakeCapsules = [
     answer:
       "Tartine Bakery is my go-to! Their croissants are out of this world.",
     dateTime: "2023-12-03T09:00",
+    viewedAt: "2023-12-03T09:00",
     location: {
       name: "Tartine Bakery",
       lat: 37.7615,
@@ -80,6 +89,7 @@ const fakeCapsules = [
     category: "fitness",
     answer: "Running around Lake Lagunita is amazing, especially at dawn!",
     dateTime: "2023-12-04T06:30",
+    viewedAt: "2023-12-04T06:30",
     location: {
       name: "Lake Lagunita",
       lat: 37.423,
@@ -93,6 +103,7 @@ const fakeCapsules = [
     category: "leisure",
     answer: "I love the serenity of the Windy Hill Open Space Preserve.",
     dateTime: "2023-12-05T12:00",
+    viewedAt: "2023-12-05T12:00",
     location: {
       name: "Windy Hill Preserve",
       lat: 37.3773,
@@ -107,6 +118,7 @@ const fakeCapsules = [
     answer:
       "Check out the food trucks near the Palo Alto Caltrain on weekends!",
     dateTime: "2023-12-06T18:00",
+    viewedAt: "2023-12-06T18:00",
     location: {
       name: "Palo Alto Caltrain Station",
       lat: 37.4439,
@@ -120,6 +132,7 @@ const fakeCapsules = [
     category: "social",
     answer: "Philz Coffee in Palo Alto has a great vibe for a casual date.",
     dateTime: "2023-12-07T16:00",
+    viewedAt: "2023-12-07T16:00",
     location: {
       name: "Philz Coffee, Palo Alto",
       lat: 37.4497,
@@ -134,6 +147,7 @@ const fakeCapsules = [
     answer:
       "The Stanford Bookstore has some really unique Stanford memorabilia!",
     dateTime: "2023-12-08T15:00",
+    viewedAt: "2023-12-08T15:00",
     location: {
       name: "Stanford Bookstore",
       lat: 37.4249,
@@ -148,6 +162,7 @@ const fakeCapsules = [
     answer:
       "Portola Valley's scenic roads are perfect for a peaceful bike ride.",
     dateTime: "2023-12-09T08:00",
+    viewedAt: "2023-12-09T08:00",
     location: {
       name: "Portola Valley",
       lat: 37.3845,
@@ -161,6 +176,7 @@ const fakeCapsules = [
     category: "outdoors",
     answer: "The Stanford Observatory on a clear night is absolutely magical.",
     dateTime: "2023-12-10T22:00",
+    viewedAt: "2023-12-10T22:00",
     location: {
       name: "Stanford Observatory",
       lat: 37.4073,
@@ -174,6 +190,7 @@ const fakeCapsules = [
     category: "food",
     answer: "California Avenue Farmers' Market on Sundays is my weekly ritual!",
     dateTime: "2023-12-11T09:00",
+    viewedAt: "2023-12-11T09:00",
     location: {
       name: "California Avenue Farmers' Market",
       lat: 37.4289,
@@ -187,6 +204,7 @@ const fakeCapsules = [
     category: "dining",
     answer: "Oren's Hummus Shop on University Ave is great for groups.",
     dateTime: "2023-12-12T19:00",
+    viewedAt: "2023-12-12T19:00",
     location: {
       name: "Oren's Hummus Shop",
       lat: 37.4449,
@@ -200,6 +218,7 @@ const fakeCapsules = [
     category: "shopping",
     answer: "Crossroads Trading on University Ave has some amazing finds!",
     dateTime: "2023-12-13T14:00",
+    viewedAt: "2023-12-13T14:00",
     location: {
       name: "Crossroads Trading",
       lat: 37.4458,
@@ -213,6 +232,7 @@ const fakeCapsules = [
     category: "relaxation",
     answer: "The Stanford Arboretum is quiet and perfect for reading.",
     dateTime: "2023-12-14T13:00",
+    viewedAt: "2023-12-14T13:00",
     location: {
       name: "Stanford Arboretum",
       lat: 37.4313,
@@ -226,6 +246,7 @@ const fakeCapsules = [
     category: "entertainment",
     answer: "The Stanford Theatre plays classic movies in a vintage setting!",
     dateTime: "2023-12-15T20:00",
+    viewedAt: "2023-12-15T20:00",
     location: {
       name: "Stanford Theatre",
       lat: 37.4452,
@@ -239,6 +260,7 @@ const fakeCapsules = [
     category: "music",
     answer: "The Stanford Jazz Festival hosts some fantastic live sessions.",
     dateTime: "2023-12-16T20:30",
+    viewedAt: "2023-12-16T20:30",
     location: {
       name: "Stanford Jazz Festival",
       lat: 37.4243,
@@ -252,6 +274,7 @@ const fakeCapsules = [
     category: "tech",
     answer: "Hacker Dojo in Mountain View has some really engaging tech talks.",
     dateTime: "2023-12-17T18:00",
+    viewedAt: "2023-12-17T18:00",
     location: {
       name: "Hacker Dojo",
       lat: 37.4143,
@@ -266,6 +289,7 @@ const fakeCapsules = [
     answer:
       "The top of the Stanford Dish trail offers a breathtaking sunrise view.",
     dateTime: "2023-12-18T06:00",
+    viewedAt: "2023-12-18T06:00",
     location: {
       name: "Stanford Dish Trail",
       lat: 37.4144,
@@ -280,6 +304,7 @@ const fakeCapsules = [
     answer:
       "Late Nite at Lagunita's dining hall is perfect for midnight cravings!",
     dateTime: "2023-12-19T23:00",
+    viewedAt: "2023-12-19T23:00",
     location: {
       name: "Lagunita's Dining Hall",
       lat: 37.4225,
@@ -293,6 +318,7 @@ const fakeCapsules = [
     category: "drinks",
     answer: "The Tap Room at Whole Foods has a great selection of craft beers.",
     dateTime: "2023-12-20T17:00",
+    viewedAt: "2023-12-20T17:00",
     location: {
       name: "Whole Foods Tap Room",
       lat: 37.4483,
@@ -393,8 +419,56 @@ export const useCapsuleStore = create((set, get) => ({
   cabinets: [...fakeCabinets],
   sentCapsules: [...sentCapsules],
   justViewedCapsules: [...justViewedCapsules],
+  promptAnswered: {
+    responded: false,
+    answer: "",
+    openedCapsule: false,
+    capsule: {
+      id: "1",
+      question: "What's one sport you've always wanted to try?",
+      category: "random",
+      answer:
+        "I really wanted to try ballet dancing when I was younger but it was too expensive.",
+      dateTime: "2023-11-29T12:00",
+      viewedAt: "2023-11-29T12:00",
+      location: {
+        name: "Stanford Campus",
+        lat: 37.41980917493959,
+        long: -122.15115173659909,
+      },
+      tags: ["fun"],
+    },
+  },
 
   // Actions
+  answerPrompt: (answer) => {
+    set((state) => {
+      state.promptAnswered.answer = answer;
+      state.promptAnswered.responded = true;
+      return { promptAnswered: state.promptAnswered };
+    });
+  },
+
+  openCapsule: () => {
+    set((state) => {
+      state.promptAnswered.openedCapsule = true;
+      return { promptAnswered: state.promptAnswered };
+    });
+  },
+
+  addCapsule: (capsule) =>
+    set((state) => ({ capsules: [...state.capsules, capsule] })),
+
+  updateCapsuleViewedAt: (capsuleId) =>
+    set((state) => {
+      const capsule = state.capsules.find((c) => c.id === capsuleId);
+      if (capsule) {
+        const now = new Date();
+        capsule.viewedAt = now;
+      }
+      return { capsules: [...state.capsules] };
+    }),
+
   addCapsuleToCabinet: (cabinetId, capsule) =>
     set((state) => {
       const cabinet = state.cabinets.find((c) => c.id === cabinetId);

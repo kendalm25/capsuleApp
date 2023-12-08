@@ -9,10 +9,7 @@ import {
 } from "react-native";
 import React from "react";
 import { YourCapsules } from "@/components/YourCapsules";
-import {
-  CapsuleCard,
-  CapsuleCardHorizontalList,
-} from "@/components/CapsuleCard";
+import { CabinetHorizontalList } from "@/components/CapsuleCard";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useCapsuleStore } from "@/store/capsuleStore";
@@ -23,9 +20,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 const windowWidth = Dimensions.get("window").width;
 
 const Home = () => {
-  const { cabinets, capsules, capsulePrompts, justViewedCapsules } =
-    useCapsuleStore();
-  const [promptAvailable, setPromptAvailable] = React.useState(true);
+  const {
+    cabinets,
+    capsules,
+    promptAnswered: { openedCapsule, responded },
+  } = useCapsuleStore();
 
   //  join all the cabinets and capsules
   const cabinetsWithCapsules = cabinets.map((cabinet) => {
@@ -35,24 +34,6 @@ const Home = () => {
     return { ...cabinet, capsules: cabinetCapsules };
   });
 
-  const allCapsulesCabinet = {
-    id: "all",
-    name: "All Capsules",
-    capsules: capsules,
-  };
-
-  const prompt = {
-    id: "1",
-    name: "prompt",
-    capsules: capsulePrompts,
-  };
-
-  const viewed = {
-    id: "all",
-    name: "Just Viewed",
-    capsules: justViewedCapsules,
-  };
-
   if (!cabinetsWithCapsules) {
     return (
       <View>
@@ -61,249 +42,157 @@ const Home = () => {
     );
   }
 
-  if (promptAvailable) {
-    promptInformation = (
-      <Link
-        href={{
-          pathname: "/(modal)/Prompt",
-        }}
-        asChild
-      >
-        <TouchableOpacity style={{ alignItems: "center", marginTop: 20 }}>
-          <View style={cardStyle.root}>
-            <View style={styles.promptAvailContainer}>
-              {/* <MaterialCommunityIcons name="star" size={24} color="black" /> */}
-              <Text style={styles.promptAvailText}>
-                New Prompt is Available
-              </Text>
-              <MaterialCommunityIcons
-                name="lightbulb-on-outline"
-                size={24}
-                color="black"
-              />
-            </View>
-            <View style={cardStyle.text}>
-              <Text numberOfLines={3} style={cardStyle.question}>
-                What's one thing that made you smile today?
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </Link>
-    );
-  } else {
-    promptInformation = (
-      <View style={styles.promptContainer}>
-        <Text style={styles.promptText}>No prompt available</Text>
-      </View>
-    );
-  }
+  const recentCapsules = capsules.sort((a, b) => {
+    if (a.viewedAt > b.viewedAt) {
+      return -1;
+    } else if (a.viewedAt < b.viewedAt) {
+      return 1;
+    }
+    return 0;
+  });
 
+  const recentCapsulesCabinet = {
+    id: "recent",
+    name: "Recently Viewed",
+    capsules: recentCapsules,
+  };
+
+  const allCapsulesCabinet = {
+    id: "all",
+    name: "All Capsules",
+    capsules: capsules,
+  };
+
+  console.log(openedCapsule, responded);
   return (
     <ScrollView
       contentContainerStyle={{ paddingBottom: 40, backgroundColor: "white" }}
     >
-      <View style={styles.header}>
-        <Text style={styles.capsuleTitle}>CAPSULE </Text>
-        <Image source={logo} style={styles.logo} />
-        <View>{promptInformation}</View>
+      <View style={styles.layout}>
+        <Text style={styles.capsuleText}>CAPSULE</Text>
+        <Image style={styles.capsuleLogo} source={logo} />
+        {!responded ? (
+          <Link
+            href={{
+              pathname: "/(modal)/AnswerPrompt",
+            }}
+            asChild
+          >
+            <TouchableOpacity style={styles.newPromptButton}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.newPromptButtonText}>
+                  New Prompt is Available
+                </Text>
+                <MaterialCommunityIcons
+                  name="lightbulb-on-outline"
+                  size={24}
+                  color="black"
+                  style={styles.newPromptButtonIcon}
+                />
+              </View>
+              <View>
+                <Text
+                  numberOfLines={3}
+                  style={styles.newPromptButtonQuestionText}
+                >
+                  What's one thing that made you smile today?
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </Link>
+        ) : !openedCapsule ? (
+          <Link
+            style={{ marginTop: 10 }}
+            href={{ pathname: "/(modal)/NewCapsule" }}
+            asChild
+          >
+            <TouchableOpacity style={styles.newCapsuleButton}>
+              <View style={{ flexDirection: "col", alignItems: "center" }}>
+                <Text style={styles.newCapsuleButtonText}>
+                  Capsule Received
+                </Text>
+                <Text style={styles.newPromptButtonQuestionText}>
+                  Click to open!
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </Link>
+        ) : (
+          <TouchableOpacity style={styles.newPromptButton}>
+            <View>
+              <Text numberOfLines={3} style={styles.noNewPrompt}>
+                No new prompts available.
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
 
-      <View style={styles.cabinet}>
-        <Text style={styles.cabinetName}>Capsule Timeline</Text>
-        <Ionicons style={styles.icon} name="ios-chevron-forward" size={20} />
-      </View>
-      <YourCapsules />
-
-      {/* Different cabinets */}
-      {/* {cabinetsWithCapsules.map((cabinet) => (
-        <View key={cabinet.id}>
-          <View style={styles.cabinet}>
-            <Text style={styles.cabinetName}>{cabinet.name}</Text>
-            <Ionicons
-              style={styles.icon}
-              name="ios-chevron-forward"
-              size={20}
-            />
-          </View>
-          <CapsuleCardHorizontalList cabinet={cabinet} />
-        </View>
-      ))} */}
-
-      {/* Recently Viewed Capsules */}
-      <View>
-        <View style={styles.cabinet}>
-          <Text style={styles.cabinetName}>Recently Viewed</Text>
-          <Ionicons style={styles.icon} name="ios-chevron-forward" size={20} />
-        </View>
-        <CapsuleCardHorizontalList cabinet={viewed} />
-      </View>
-
-      {/* Create new cabinets */}
-      {/* <Link href={{ pathname: "/(modal)/CreateCabinet" }} asChild>
-        <TouchableOpacity>
-          <View style={styles.cabinet}>
-            <Text style={styles.cabinetName}>Create New Cabinet</Text>
-            <Ionicons
-              style={(styles.icon, { marginLeft: 8 })}
-              name="add-circle-outline"
-              size={20}
-            />
-          </View>
-        </TouchableOpacity>
-      </Link> */}
+      <CabinetHorizontalList cabinet={recentCapsulesCabinet} />
+      <CabinetHorizontalList cabinet={allCapsulesCabinet} />
     </ScrollView>
   );
 };
 
+export default Home;
+
 const styles = StyleSheet.create({
-  container: {
+  layout: {
     flex: 1,
-    top: 0,
-    backgroundColor: Colors.base,
-  },
-
-  header: {
-    marginTop: 50,
-    justifyContent: "center",
+    // backgroundColor: Colors.base,
     alignItems: "center",
+    justifyContent: "center",
   },
+  capsuleText: {
+    fontSize: 40,
+    fontWeight: "900",
 
-  logo: {
-    height: 100,
+    marginTop: 50,
+  },
+  capsuleLogo: {
+    marginTop: 20,
+    height: 150,
     resizeMode: "contain",
   },
-
-  promptContainer: {
-    width: windowWidth * 0.9,
-    marginTop: 20,
+  newPromptButton: {
+    backgroundColor: Colors.base,
+    borderRadius: 10,
     padding: 20,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.base300,
-    shadowColor: Colors.base950,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-  },
-
-  promptAvailContainer: {
-    flexDirection: "row",
-  },
-
-  promptAvailText: {
-    fontSize: 25,
-    fontWeight: "300",
-    marginRight: 5,
-    marginBottom: 3,
-  },
-
-  promptText: {
-    textAlign: "center",
-  },
-
-  capsuleTitle: {
-    textAlign: "center",
-    fontSize: 50,
-    fontWeight: "800",
-    color: Colors.base950,
-    marginVertical: 20,
-  },
-
-  icon: {
-    flexDirection: "row",
+    width: windowWidth - 40,
     alignItems: "center",
-    color: Colors.base950,
-  },
-
-  cabinet: {
+    borderColor: Colors.base300,
+    borderWidth: 1,
     marginTop: 20,
-    marginBottom: 12,
-    paddingHorizontal: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "stretch",
   },
-
-  cabinetName: {
-    fontSize: 18,
-    fontWeight: "bold",
+  newPromptButtonText: {
     color: Colors.base950,
+    fontSize: 20,
+    fontWeight: "bold",
   },
-});
-
-const cardStyle = StyleSheet.create({
-  root: {
-    // width: windowWidth * 0.7,
-    maxWidth: windowWidth * 0.8,
-    height: 150,
-    padding: 18,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    rowGap: 6,
-    columnGap: 6,
+  newPromptButtonIcon: {
+    marginLeft: 10,
+  },
+  newPromptButtonQuestionText: {
+    color: Colors.base950,
+    fontSize: 20,
+    marginTop: 10,
+  },
+  noNewPrompt: {
+    color: Colors.base950,
+    fontSize: 20,
+  },
+  newCapsuleButton: {
+    backgroundColor: Colors.primary,
     borderRadius: 10,
-    borderWidth: 3,
-    borderStyle: "solid",
-    borderColor: Colors.base300,
-    backgroundColor: Colors.base,
-    shadowColor: Colors.base950,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    marginVertical: 20,
-    // marginEnd: 10,
-  },
-  addCapsule: {
-    width: 250,
-    height: 175,
-    padding: 12,
-    flexDirection: "column",
-    justifyContent: "center",
+    padding: 20,
+    width: windowWidth - 40,
     alignItems: "center",
-    rowGap: 6,
-    columnGap: 6,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderStyle: "solid",
     borderColor: Colors.base300,
-    backgroundColor: Colors.base,
-    shadowColor: Colors.base950,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    marginEnd: 10,
+    borderWidth: 1,
   },
-
-  text: {
-    // justifyContent: "center",
-  },
-
-  question: {
-    // textAlign: "center",
-    alignSelf: "stretch",
-    fontSize: 18,
-    fontWeight: "600",
-    justifyContent: "center",
-  },
-
-  answer: {
-    alignSelf: "stretch",
-    overflow: "hidden",
-    fontSize: 16,
-    color: Colors.base700,
-    marginTop: 4,
+  newCapsuleButtonText: {
+    color: Colors.base950,
+    fontSize: 32,
+    fontWeight: "bold",
   },
 });
-
-export default Home;
