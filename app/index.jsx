@@ -22,11 +22,7 @@ const index = () => {
 
   return (
     <>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           options={{
@@ -48,7 +44,7 @@ const index = () => {
         <Stack.Screen
           name="Capsules"
           options={{
-            headerTitle: "Capsules",
+            headerShown: false,
             animation: "none",
           }}
           component={Capsules}
@@ -63,7 +59,6 @@ const index = () => {
             headerLeft: () => (
               <TouchableOpacity
                 style={{
-                  backgroundColor: Colors.base,
                   borderRadius: 20,
                   padding: 6,
                 }}
@@ -91,7 +86,6 @@ const index = () => {
             headerLeft: () => (
               <TouchableOpacity
                 style={{
-                  backgroundColor: Colors.base,
                   borderRadius: 20,
                   padding: 6,
                 }}
@@ -165,7 +159,7 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    backgroundColor: Colors.base,
+    backgroundColor: Colors.white,
     borderTopWidth: 1,
     borderTopColor: Colors.base300,
     paddingVertical: 10,
