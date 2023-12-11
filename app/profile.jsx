@@ -7,6 +7,8 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Pressable,
+  Button,
 } from "react-native";
 import { YourCapsules } from "@/components/YourCapsules";
 import { CapsuleCardHorizontalList } from "@/components/CapsuleCard";
@@ -20,14 +22,12 @@ import { Link } from "expo-router";
 import profilePic from "../assets/Images/profile-pic-1.jpeg";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
+import { supabase } from "../app/lib/supabase";
+import Auth from "../components/Auth";
+import Account from "../components/Account";
+
 const windowWidth = Dimensions.get("window").width;
 
-/**
- * Profile
- *
- * screen used for displayisng user profile
- * KENDAL TODO: implement this screen
- */
 const Profile = () => {
   const { sentCapsules } = useCapsuleStore();
 
@@ -94,6 +94,10 @@ const Profile = () => {
 
           <CapsuleCardHorizontalList cabinet={allCapsulesCabinet} />
         </View>
+      </View>
+
+      <View style={styles.verticallySpaced}>
+        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
     </ScrollView>
   );
