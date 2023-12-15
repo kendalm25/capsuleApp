@@ -13,12 +13,13 @@ import { useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
 import * as Haptics from "expo-haptics";
 import { SUBSET_TAGS, useCapsuleStore } from "@/store/capsuleStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AnswerPrompt() {
   const router = useRouter();
-  const { answerPrompt } = useCapsuleStore();
+  const { answerPrompt, sentCapsules, addCapsule, addCapsuleToCabinet } =
+    useCapsuleStore();
   const [capsuleAnswer, setCapsuleAnswer] = useState("");
   const [cabinetTags, setCabinetTags] = useState([]);
   const [error, setError] = useState({
@@ -26,6 +27,20 @@ export default function AnswerPrompt() {
     tags: false,
     capsules: false,
   });
+
+  const sentCapsule = {
+    id: "20",
+    question: "What's one thing that made you smile today?",
+    category: "fun",
+    answer: capsuleAnswer,
+    dateTime: new Date(),
+    location: {
+      name: "Stanford Campus",
+      lat: 37.43358803600001,
+      long: -122.18041604630488,
+    },
+    tags: cabinetTags,
+  };
 
   function toggleTag(tag) {
     if (cabinetTags.includes(tag)) {
@@ -40,20 +55,10 @@ export default function AnswerPrompt() {
 
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     router.back();
-  };
-
-  const capsule = {
-    id: "1",
-    question: "What's one thing that made you smile today?",
-    category: "fun",
-    answer: "",
-    dateTime: new Date(),
-    location: {
-      name: "Stanford Campus",
-      lat: 37.43358803600001,
-      long: -122.18041604630488,
-    },
-    tags: [],
+    console.log("capsule answer: ", capsuleAnswer);
+    console.log(" tags: ", cabinetTags);
+    console.log("capsule: ", sentCapsule);
+    addCapsuleToCabinet("2", sentCapsule);
   };
 
   return (
@@ -63,7 +68,7 @@ export default function AnswerPrompt() {
           {/* Type a name */}
           <View style={styles.section}>
             <View style={styles.header}>
-              <Text style={styles.title}>{capsule.question}</Text>
+              <Text style={styles.title}>{sentCapsule.question}</Text>
             </View>
             <TextInput
               style={styles.input}

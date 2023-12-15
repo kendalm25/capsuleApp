@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import sentCapsule from "../app/(modal)/AnswerPrompt";
 
 const fakeCapsulePrompts = [
   {

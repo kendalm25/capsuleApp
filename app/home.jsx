@@ -18,11 +18,13 @@ import logo from "../assets/Images/capsule-logo.png";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const Home = () => {
   const {
     cabinets,
     capsules,
+    justViewedCapsules,
     promptAnswered: { openedCapsule, responded },
   } = useCapsuleStore();
 
@@ -121,7 +123,7 @@ const Home = () => {
           <TouchableOpacity style={styles.newPromptButton}>
             <View>
               <Text numberOfLines={3} style={styles.noNewPrompt}>
-                No new prompts available.
+                A new prompt will be available soon.
               </Text>
             </View>
           </TouchableOpacity>
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   capsuleText: {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: "900",
 
     marginTop: 50,
@@ -154,15 +156,19 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: "contain",
   },
+
   newPromptButton: {
     backgroundColor: Colors.base,
     borderRadius: 10,
     padding: 20,
     width: windowWidth - 40,
+    justifyContent: "center",
     alignItems: "center",
     borderColor: Colors.base300,
     borderWidth: 1,
     marginTop: 20,
+    marginBottom: 10,
+    minHeight: windowHeight * 0.15,
   },
   newPromptButtonText: {
     color: Colors.base950,

@@ -19,220 +19,152 @@ import logo from "@/assets/Images/logo.png";
 import logoOutline from "@/assets/Images/logo-outline.png";
 import { useState, useEffect } from "react";
 
-import { supabase } from "../app/lib/supabase";
-import Auth from "../components/Auth";
-import Account from "../components/Account";
-
 const Stack = createNativeStackNavigator(); // Stack contains Screen & Navigator properties
 
 const index = () => {
   const navigation = useNavigation();
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [session, setSession] = useState(null);
 
-  // useEffect(() => {
-  //   const checkLoggedInStatus = async () => {
-  //     const userSession = await supabase.auth.session();
-  //     if (userSession) {
-  //       setSession(userSession);
-  //       console.log("user session: ", userSession);
-  //       setLoggedIn(true);
-  //     }
-  //   };
+  return (
+    <>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+          component={Home}
+        />
 
-  //   checkLoggedInStatus();
+        <Stack.Screen
+          name="Profile"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+          component={Profile}
+        />
 
-  //   const authListener = supabase.auth.onAuthStateChange(
-  //     (_event, userSession) => {
-  //       if (userSession) {
-  //         setSession(userSession);
-  //         console.log("user session: ", userSession);
-  //         setLoggedIn(true);
-  //       } else {
-  //         setSession(null);
-  //         console.log("user session: ", userSession);
-  //         setLoggedIn(false);
-  //       }
-  //     }
-  //   );
+        <Stack.Screen
+          name="Capsules"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+          component={TripleView}
+        />
 
-  //   return () => {
-  //     authListener.unsubscribe();
-  //   };
-  // }, []);
+        <Stack.Screen
+          name="(modal)/CreateCabinet"
+          options={{
+            presentation: "modal",
+            headerTitle: "Create Cabinet",
 
-  // const handleAuthSuccess = (userSession) => {
-  //   setSession(userSession);
-  //   setLoggedIn(true);
-  // };
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{
+                  borderRadius: 20,
+                  padding: 6,
+                }}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={28}
+                  color={Colors.primary}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+          component={CreateCabinet}
+        />
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("session: ", session);
-      setSession(session);
-    });
+        <Stack.Screen
+          name="(modal)/AnswerPrompt"
+          options={{
+            presentation: "modal",
+            headerTitle: "Answer Prompt",
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("session: ", session);
-      setSession(session);
-    });
-  }, []);
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{
+                  borderRadius: 20,
+                  padding: 6,
+                }}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={28}
+                  color={Colors.primary}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+          component={AnswerPrompt}
+        />
 
-  if (!loggedIn) {
-    return (
-      <View>
-        <View>
-          {session && session.user ? (
-            <Account key={session.user.id} session={session} />
-          ) : (
-            <Auth />
-          )}
-        </View>
-      </View>
-    );
-  } else {
-    return (
-      <>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            options={{
-              headerShown: false,
-              animation: "none",
-            }}
-            component={Home}
-          />
+        <Stack.Screen
+          name="(modal)/Capsule"
+          options={{
+            presentation: "modal",
+            headerTitle: "Capsule",
 
-          <Stack.Screen
-            name="Profile"
-            options={{
-              headerShown: false,
-              animation: "none",
-            }}
-            component={Profile}
-          />
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{
+                  borderRadius: 20,
+                  padding: 6,
+                }}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={28}
+                  color={Colors.primary}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+          component={Capsule}
+        />
+        <Stack.Screen
+          name="(modal)/NewCapsule"
+          options={{
+            presentation: "modal",
+            headerTitle: "Received Capsule",
 
-          <Stack.Screen
-            name="Capsules"
-            options={{
-              headerShown: false,
-              animation: "none",
-            }}
-            component={TripleView}
-          />
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{
+                  borderRadius: 20,
+                  padding: 6,
+                }}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={28}
+                  color={Colors.primary}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+          component={NewCapsule}
+        />
+      </Stack.Navigator>
 
-          <Stack.Screen
-            name="(modal)/CreateCabinet"
-            options={{
-              presentation: "modal",
-              headerTitle: "Create Cabinet",
-
-              headerLeft: () => (
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 20,
-                    padding: 6,
-                  }}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                >
-                  <Ionicons
-                    name="close-outline"
-                    size={28}
-                    color={Colors.primary}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-            component={CreateCabinet}
-          />
-
-          <Stack.Screen
-            name="(modal)/AnswerPrompt"
-            options={{
-              presentation: "modal",
-              headerTitle: "Answer Prompt",
-
-              headerLeft: () => (
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 20,
-                    padding: 6,
-                  }}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                >
-                  <Ionicons
-                    name="close-outline"
-                    size={28}
-                    color={Colors.primary}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-            component={AnswerPrompt}
-          />
-
-          <Stack.Screen
-            name="(modal)/Capsule"
-            options={{
-              presentation: "modal",
-              headerTitle: "Capsule",
-
-              headerLeft: () => (
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 20,
-                    padding: 6,
-                  }}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                >
-                  <Ionicons
-                    name="chevron-back"
-                    size={28}
-                    color={Colors.primary}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-            component={Capsule}
-          />
-          <Stack.Screen
-            name="(modal)/NewCapsule"
-            options={{
-              presentation: "modal",
-              headerTitle: "Received Capsule",
-
-              headerLeft: () => (
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 20,
-                    padding: 6,
-                  }}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                >
-                  <Ionicons
-                    name="chevron-back"
-                    size={28}
-                    color={Colors.primary}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
-            component={NewCapsule}
-          />
-        </Stack.Navigator>
-
-        <NavBar />
-      </>
-    );
-  }
+      <NavBar />
+    </>
+  );
 };
 
 export default index;

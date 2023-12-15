@@ -15,12 +15,18 @@ import { Link, useRouter } from "expo-router";
 import Toolbar from "@/components/ToolBar";
 import MapView, { Marker } from "react-native-maps";
 import Capsules from "@/components/Capsules";
+import { CapsuleCardHorizontalList } from "@/components/CapsuleCard";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function TripleView() {
-  const { cabinets, capsules, capsulePrompts, justViewedCapsules } =
-    useCapsuleStore();
+  const {
+    cabinets,
+    capsules,
+    sentCapsules,
+    capsulePrompts,
+    justViewedCapsules,
+  } = useCapsuleStore();
   const [currentScreen, setCurrentScreen] = useState("Capsules");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState({});
@@ -33,6 +39,12 @@ export default function TripleView() {
       answer.toLowerCase().includes(searchLower)
     );
   });
+
+  const allCapsulesCabinet = {
+    id: "all",
+    name: "sent-capsules",
+    capsules: sentCapsules,
+  };
 
   const cabinetsWithCapsules = cabinets
     .map((cabinet) => {
@@ -58,10 +70,24 @@ export default function TripleView() {
       return <Map capsules={filteredCapsules} />;
     } else if (currentScreen === "Cabinets") {
       return (
-        <Cabinets
-          cabinetsWithCapsules={cabinetsWithCapsules}
-          capsules={capsules}
-        />
+        <ScrollView>
+          <View style={styles.capsules}>
+            <View style={styles.responseHeader}>
+              <Text style={styles.cabinetName}>Your Responses</Text>
+              <Ionicons
+                style={styles.icon}
+                name="ios-chevron-forward"
+                size={20}
+              />
+            </View>
+
+            <CapsuleCardHorizontalList cabinet={allCapsulesCabinet} />
+          </View>
+          <Cabinets
+            cabinetsWithCapsules={cabinetsWithCapsules}
+            capsules={capsules}
+          />
+        </ScrollView>
       );
     }
   };
@@ -280,5 +306,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: Colors.base950,
+  },
+
+  responseHeader: {
+    marginBottom: 12,
+    marginTop: 30,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "stretch",
   },
 });

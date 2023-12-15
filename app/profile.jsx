@@ -22,9 +22,7 @@ import { Link } from "expo-router";
 import profilePic from "../assets/Images/profile-pic-1.jpeg";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 
-import { supabase } from "../app/lib/supabase";
-import Auth from "../components/Auth";
-import Account from "../components/Account";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -96,8 +94,10 @@ const Profile = () => {
         </View>
       </View>
 
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+      <View style={styles.signOut}>
+        <TouchableOpacity style={styles.SignOutBtn} onPress={() => null}>
+          <Text style={styles.btnText}> Sign Out </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -157,13 +157,6 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: "black",
     backgroundColor: "black",
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
   },
 
   information: {
@@ -229,7 +222,26 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
 
-  capsules: {
-    // flex: 1,
+  signOut: {
+    alignItems: "center",
+    margin: 10,
+  },
+
+  SignOutBtn: {
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.base300,
+    shadowColor: Colors.base950,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+  },
+
+  btnText: {
+    fontSize: 18,
   },
 });
